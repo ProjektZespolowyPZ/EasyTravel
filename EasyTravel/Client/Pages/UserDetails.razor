@@ -1,0 +1,76 @@
+﻿@page "/users/GetUserInformation"
+@using System.Text.Json
+@using System.Text
+@using System.Net.Http.Headers
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            @if (user == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <a href="/users/@user.Id/EditProfile">Edytuj profil</a>
+                <h6>Imie: @user.Name</h6>
+                <h6>Nazwisko: @user.Surname</h6>
+                <h6>Awatar:</h6>
+                @if (user.ProfilePicture != "")
+                {
+                    <div>
+                        <img src="@user.ProfilePicture" style="display: block; max-width: 550px; height: auto;" />
+                    </div>
+                }
+                <InputFile OnChange="@HandleSelected" />
+                <h6>Email: @user.Email</h6>
+                <h6>Numer telefonu: @user.PhoneNumber</h6>
+                <h6>Data rejestracji: @user.RegistrationDate</h6>
+                <h6>Data ostatniego logowania: @user.LastLoginDate</h6>   
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    private UserInformationVm user = new UserInformationVm();
+    public string FileUrl { get; set; }
+    public string FileType { get; set; }
+    UpdateAvatar model = new UpdateAvatar();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
+    }
+
+
+    private async Task HandleSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        FileType = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileType, file.Name);
+            var response = await Http.PostAsync("api/upload/avatar", content);
+            FileUrl = await response.Content.ReadAsStringAsync();
+            user.ProfilePicture = FileUrl;
+
+            model.Id = user.Id;
+            model.Avatar = user.ProfilePicture;
+            var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+            var content1 = new StringContent(modelJson, Encoding.UTF8, "application/json");
+            await Http.PutAsync("api/users/update-avatar", content1);
+        }
+    }
+}
+
