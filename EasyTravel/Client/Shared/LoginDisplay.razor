@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
 <AuthorizeView>
    
@@ -19,7 +20,7 @@
         
         <MudMenu Label="Mój profil" Variant="Variant.Filled" Color="Color.Secondary">
             <MudMenuItem><a class="link" href="/users/GetUserInformation">Pokaż profil</a></MudMenuItem>
-            <MudMenuItem><a class="link" href="/users/@user.Id/EditProfile">Zmiana danych</a></MudMenuItem>
+            <MudMenuItem OnClick="@EditProfile">Zmiana danych</MudMenuItem>
           
             
         
@@ -53,9 +54,11 @@
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
     }
-    protected override async Task OnInitializedAsync()
+
+    public async void EditProfile()
     {
         user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
+        Navigation.NavigateTo($"users/{user.Id}/EditProfile");
     }
 
 }
