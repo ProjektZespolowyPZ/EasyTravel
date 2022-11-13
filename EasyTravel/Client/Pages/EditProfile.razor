@@ -5,12 +5,13 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<div class="page">
+<div class="page" style="padding: 10px;">
     <AuthorizeView>
         <Authorized Context="Auth">
             <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                 <DataAnnotationsValidator />
-                <div class="form-row">
+                <h3> Twoje dane</h3>
+                <div class="form-row" style="padding">
                     <label>Imię</label>
                     <InputText @bind-Value="@model.Name" class="form-control" />
                     <ValidationMessage For="@(() => model.Name)" />
@@ -45,6 +46,16 @@
                 <button type="submit" class="btn btn-primary">Zatwierdź</button>
                 <button type="reset" class="btn btn-danger">Wyczyść</button>
                 <a class="btn btn-info" href="/users/GetUserInformation">Powrót</a>
+
+
+
+
+
+
+
+
+
+
             </EditForm>
         </Authorized>
         <NotAuthorized>

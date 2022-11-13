@@ -1,20 +1,61 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
-
+@inject HttpClient Http
 <AuthorizeView>
+   
     <Authorized>
-        Cześć, <a class="link" href="/users/GetUserInformation">Pokaż profil</a>
-        <button class="btn btn-success" @onclick="BeginSignOut">Wyloguj</button>
+        
+        <div class="logo">Logo</div>
+        <div class="search">
+            <form>
+                <input type="text" placeholder="Znajdz przewodnika/wycieczke" name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+
+        </div>
+     
+        <MudButton Variant="Variant.Text" @onclick="BeginSignOut" Style="color: white;" >Wyloguj</MudButton>
+       
+        
+        <MudMenu Label="Mój profil" Variant="Variant.Filled" Color="Color.Secondary">
+            <MudMenuItem><a class="link" href="/users/GetUserInformation">Pokaż profil</a></MudMenuItem>
+            <MudMenuItem><a class="link" href="/users/@user.Id/EditProfile">Zmiana danych</a></MudMenuItem>
+          
+            
+        
+        </MudMenu>
+      
     </Authorized>
+    
     <NotAuthorized>
-        <a href="authentication/login" class="btn btn-primary">Zaloguj</a>
+        
+        <div class="logo">Logo</div>
+        <div class="search">
+            <form>
+                <input type="text" placeholder="Znajdz przewodnika/wycieczke" name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+            </div>   
+        <a href="authentication/login" class="login">Zaloguj</a>
     </NotAuthorized>
 </AuthorizeView>
 
 @code {
+
+    bool _isExpanded = true;
+
+    private UserInformationVm user;
+
+    public string TextValue { get; set; }
+
     private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
     }
+    protected override async Task OnInitializedAsync()
+    {
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
+    }
+
 }

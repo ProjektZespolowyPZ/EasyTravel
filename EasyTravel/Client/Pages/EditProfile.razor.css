@@ -1,0 +1,46 @@
+﻿.form-row {
+    max-width: 250px;
+}
+.border {
+    font-family: Arial;
+    margin-top: 10px;
+    border-style: solid;
+    border-width: medium;
+    border-radius: 8px;
+    text-align: left;
+    width: 1100px;
+    height: fit-content;
+    background-color: #C5CAE9;
+    float: left;
+}
+
+.left {
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 8px;
+    width: 45%;
+    float: left;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.right {
+    margin-top: 20px;
+    margin-right: 18px;
+    border-radius: 8px;
+    width: 45%;
+    height: auto;
+    float: right;
+    padding: 15px;
+    background-color: #8C9EFF;
+}
+
+img {
+    position: center;
+    display: block;
+    max-width: 450px;
+    height: auto;
+    min-height: 400px;
+    border-radius: 50%;
+    border-style: outset;
+}

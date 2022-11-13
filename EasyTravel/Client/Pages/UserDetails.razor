@@ -4,6 +4,7 @@
 @using System.Net.Http.Headers
 
 @inject NavigationManager NavigationManager
+
 @inject HttpClient Http
 
 <div class="page">
@@ -15,21 +16,51 @@
             }
             else
             {
-                <a href="/users/@user.Id/EditProfile">Edytuj profil</a>
-                <h6>Imie: @user.Name</h6>
-                <h6>Nazwisko: @user.Surname</h6>
-                <h6>Awatar:</h6>
-                @if (user.ProfilePicture != "")
-                {
-                    <div>
-                        <img src="@user.ProfilePicture" style="display: block; max-width: 550px; height: auto;" />
+                <div class="border">
+                    <div class="left">
+                        <h3>Twój awatar</h3>
+                        @if (user.ProfilePicture != "")
+                        {
+                            <div>
+                                <img src="@user.ProfilePicture"/>
+                            </div>
+                              <h6>Zmiana awatara</h6><InputFile OnChange="@HandleSelected" />
+
+                        }
+                      
                     </div>
-                }
-                <InputFile OnChange="@HandleSelected" />
-                <h6>Email: @user.Email</h6>
-                <h6>Numer telefonu: @user.PhoneNumber</h6>
-                <h6>Data rejestracji: @user.RegistrationDate</h6>
-                <h6>Data ostatniego logowania: @user.LastLoginDate</h6>   
+                    <div class="right" style="">
+                        <h3>Dane konta</h3>
+                     
+                        <h6>Imie </h6>
+                        <div class="form-row form-control" style="padding:5px;">
+                            <label>@user.Name  <button type="button" class="bnt bchange">Zmien</button></label>
+                           
+
+                        </div>
+                        
+                        <h6>Nazwisko </h6>
+                        <div class="form-row form-control" style="padding: 5px;">
+                            <label>@user.Surname <button type="button" class="bnt bchange">Zmien</button></label>
+                            
+                        </div>
+                        
+                        <h6>E-Mail </h6>
+                        <div class="form-row form-control" style="padding: 5px;">
+                            <label>@user.Email <button type="button" class="bnt bchange">Zmien</button></label>
+                           
+                        </div>
+                        
+                        <h6>Numer Telefonu </h6>
+                        <div class="form-row form-control" style="padding: 5px;">
+                            <label>@user.PhoneNumber   <button type="button" class="bnt bchange">Zmien</button></label>
+                            
+                        </div>  
+                       <br>
+                        <h6 class="info">Konto założone dnia: @user.RegistrationDate</h6>
+                        
+                    </div>         
+                </div>
             }
         </Authorized>
         <NotAuthorized>

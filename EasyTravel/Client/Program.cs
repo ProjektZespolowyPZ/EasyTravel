@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using MudBlazor.Services;
 
 namespace EasyTravel.Client
 {
@@ -15,8 +16,12 @@ namespace EasyTravel.Client
     {
         public static async Task Main(string[] args)
         {
+          
+
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
+
+            builder.Services.AddMudServices();
 
             builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(builder.Configuration["ApiUrl"]))
                 .AddHttpMessageHandler(sp =>
