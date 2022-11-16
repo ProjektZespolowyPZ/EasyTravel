@@ -27,33 +27,40 @@
                               
 
                         }
-                        <h6>Zmiana awatara</h6><InputFile OnChange="@HandleSelected" />
+                        <div class="changeAvatar">
+                            <div class="zmiana">
+                                <h6>Zmiana awatara</h6>
+                            </div>
+                            <div class="chooseFile">
+                                <InputFile OnChange="@HandleSelected" />
+                            </div>
+                        </div>
                     </div>
                     <div class="right" style="">
                         <h3>Dane konta</h3>
                      
-                        <h6>Imie </h6>
+                        <h6>Imię </h6>
                         <div class="form-row form-control" style="padding:5px;">
-                            <label>@user.Name  <button type="button" class="bnt bchange">Zmien</button></label>
+                            <label>@user.Name  <button type="button" class="bnt bchange">Zmień</button></label>
                            
 
                         </div>
                         
                         <h6>Nazwisko </h6>
                         <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.Surname <button type="button" class="bnt bchange">Zmien</button></label>
+                            <label>@user.Surname <button type="button" class="bnt bchange">Zmień</button></label>
                             
                         </div>
                         
                         <h6>E-Mail </h6>
                         <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.Email <button type="button" class="bnt bchange">Zmien</button></label>
+                            <label>@user.Email <button type="button" class="bnt bchange">Zmień</button></label>
                            
                         </div>
                         
                         <h6>Numer Telefonu </h6>
                         <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.PhoneNumber   <button type="button" class="bnt bchange">Zmien</button></label>
+                            <label>@user.PhoneNumber   <button type="button" class="bnt bchange">Zmień</button></label>
                             
                         </div>  
                        <br>

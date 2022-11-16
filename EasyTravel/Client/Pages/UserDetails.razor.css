@@ -1,11 +1,15 @@
 ﻿body {
    
 }
-.bchange{
-    position:absolute;
-    color: red;
+.bchange {
+    position: absolute;
+    color: #0040A1;
     right: 340px;
 }
+.bchange:hover{
+   color: #FFE4AD;
+}
+
 .border {
     font-family: Arial;
     margin-top: 10px;
@@ -14,8 +18,8 @@
     border-radius: 8px;
     text-align: left;
     width: 1100px;
-    height: 446px;;
-    background-color: #C5CAE9;
+    height: 446px;
+    background-color: #f9e4ba;
     float: left;
 }
 .left {
@@ -37,12 +41,12 @@
     height: auto;
     float: right;
     padding: 15px;
-    background-color: #8C9EFF;
+    background-color: #EDA71A;
 }
 
 img {
     border: 0px solid black;
-    border-radius: 50%;
+    border-radius: 10%;
     padding: 1em;
     display: block;
     width: 280px;
@@ -63,10 +67,21 @@ h3 {
     font-weight: 100;
 }
 .left h3 {
-    color: black;
-    font-weight: 100;
+    color: #2d2d2d;
+    font-weight: ;
 }
 .left h6 {
-    color: black;
-    font-weight: 100;
+    color: #EDA71A;
+    font-weight: 600;
+}
+
+.changeAvatar {
+    border-radius: 8px;
+    padding: 10px;
+    /*background-color: #EDA71A;*/
+}
+
+.chooseFile {
+    position: center;
+
 }
