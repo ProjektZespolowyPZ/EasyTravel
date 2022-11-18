@@ -38,34 +38,63 @@
                     </div>
                     <div class="right" style="">
                         <h3>Dane konta</h3>
-                     
-                        <h6>Imię </h6>
-                        <div class="form-row form-control" style="padding:5px;">
-                            <label>@user.Name  <button type="button" class="bnt bchange">Zmień</button></label>
-                           
+                        <button type="button" class="bnt bchange" @onclick="ShowHideEdit">@text</button>
+                        @if (!Edit)
+                        {
+                            <h6>Imię </h6>
+                            <div class="form-row form-control" style="padding:5px;">
+                                <label>@user.Name</label>
+                            </div>
 
-                        </div>
-                        
-                        <h6>Nazwisko </h6>
-                        <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.Surname <button type="button" class="bnt bchange">Zmień</button></label>
-                            
-                        </div>
-                        
-                        <h6>E-Mail </h6>
-                        <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.Email <button type="button" class="bnt bchange">Zmień</button></label>
-                           
-                        </div>
-                        
-                        <h6>Numer Telefonu </h6>
-                        <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.PhoneNumber   <button type="button" class="bnt bchange">Zmień</button></label>
-                            
-                        </div>  
-                       <br>
-                        <h6 class="info">Konto założone dnia: @user.RegistrationDate</h6>
-                        
+                            <h6>Nazwisko </h6>
+                            <div class="form-row form-control" style="padding: 5px;">
+                                <label>@user.Surname</label>
+
+                            </div>
+
+                            <h6>E-Mail </h6>
+                            <div class="form-row form-control" style="padding: 5px;">
+                                <label>@user.Email</label>
+
+                            </div>
+
+                            <h6>Numer Telefonu </h6>
+                            <div class="form-row form-control" style="padding: 5px;">
+                                <label>@user.PhoneNumber</label>
+
+                            </div>  
+                            <br>
+                            <h6 class="info">Konto założone dnia: @user.RegistrationDate</h6>
+                        }
+                        else
+                        {
+                            <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+                                <DataAnnotationsValidator />
+                                <div class="form-row">
+                                    <label>Imię</label>
+                                    <InputText @bind-Value="@model.Name" class="form-control" />
+                                    <ValidationMessage For="@(() => model.Name)" />
+                                </div>
+                                <div class="form-row">
+                                    <label>Nazwisko</label>
+                                    <InputText @bind-Value="@model.Surname" class="form-control" />
+                                    <ValidationMessage For="@(() => model.Surname)" />
+                                </div>
+                                <div class="form-row">
+                                    <label>Email</label>
+                                    <InputText @bind-Value="@model.Email" class="form-control" />
+                                    <ValidationMessage For="@(() => model.Email)" />
+                                </div>
+                                <div class="form-row">
+                                    <label>Numer telefonu</label>
+                                    <InputText @bind-Value="@model.PhoneNumber" class="form-control" />
+                                    <ValidationMessage For="@(() => model.PhoneNumber)" />
+                                </div>
+                                <br /><br />
+                                <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                                <button type="reset" class="btn btn-danger">Wyczyść</button>
+                            </EditForm>
+                        }
                     </div>         
                 </div>
             }
@@ -77,14 +106,44 @@
 </div>
 @code {
     private UserInformationVm user;
+    EditProfileForm model = new EditProfileForm();
     public string FileUrl { get; set; }
     public string FileType { get; set; }
-    UpdateAvatar model = new UpdateAvatar();
+    UpdateAvatar model1 = new UpdateAvatar();
+    public string text { get; set; } = "Zmień";
+    public bool Edit { get; set; } = false;
+    private EditContext editContext;
 
 
     protected override async Task OnInitializedAsync()
     {
         user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
+        model.Id = user.Id;
+        model.Name = user.Name;
+        model.Surname = user.Surname;
+        model.ProfilePicture = user.ProfilePicture;
+        model.Email = user.Email;
+        model.PhoneNumber = user.PhoneNumber;
+        FileUrl = model.ProfilePicture;
+        editContext = new EditContext(model);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PutAsync($"api/users/update-profile", content);
+        Edit = !Edit;
+        text = "Zmień";
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
+        StateHasChanged();
+    }
+
+    private void HandleReset()
+    {
+        model = new EditProfileForm();
+        editContext = new EditContext(model);
+        FileUrl = null;
     }
 
 
@@ -103,12 +162,26 @@
             FileUrl = await response.Content.ReadAsStringAsync();
             user.ProfilePicture = FileUrl;
 
-            model.Id = user.Id;
-            model.Avatar = user.ProfilePicture;
+            model1.Id = user.Id;
+            model1.Avatar = user.ProfilePicture;
             var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
             var content1 = new StringContent(modelJson, Encoding.UTF8, "application/json");
             await Http.PutAsync("api/users/update-avatar", content1);
         }
+    }
+
+    private void ShowHideEdit()
+    {
+        Edit = !Edit;
+        if(Edit)
+        {
+            text = "Pokaż profil";
+        }
+        else
+        {
+            text = "Zmień";
+        }
+        
     }
 }
 

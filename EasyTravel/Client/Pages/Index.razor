@@ -1,5 +1,56 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <h1>Strona główna</h1>
+            <a class="link" href="/tours/CreateTour">Dodaj wycieczkę</a>
+            
+            @foreach(var item in tours.Tours)
+            {
+                <div style="background-color: lightblue;" @onclick="() => GoToDetails(item.Id)">
+                    <h6>@item.UserName</h6>
+                    <h6>@item.Surname</h6>
+                    <h6>Awatar: </h6>
+                    @if (item.ProfilePicture != "")
+                            {
+                                <div>
+                                    <img src="@item.ProfilePicture" style="display: block; max-width: 350px; height: auto;"/>
+                                </div>
+                              
 
-<h1>Strona główna</h1>
+                            }
+                    <h6>Nazwa wycieczki: @item.TourName</h6>
+                    @if (item.MainPhoto != "")
+                    {
+                        <div>
+                            <img src="@item.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
+                        </div>
+                    }
+                </div>
+                <br /><br />
+            }
+            
+        </Authorized>
+        <NotAuthorized>
+            <p>Strona główna, wyświetlająca się przed zalogowaniem</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
 
+@code{
+    public ToursVm tours { get; set; } = new ToursVm();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tours = await Http.GetFromJsonAsync<ToursVm>("api/tours");
+        tours.Tours.Reverse();
+    }
+
+    public void GoToDetails(int id)
+    {
+        NavigationManager.NavigateTo($"/tours/{id}");
+    }
+}
 

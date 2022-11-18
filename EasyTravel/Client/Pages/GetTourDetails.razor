@@ -1,0 +1,86 @@
+﻿@page "/tours/{Id:int}"
+@using System.Text.Json
+@using System.Text
+@using System.Net.Http.Headers
+
+@inject NavigationManager NavigationManager
+
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            @if (tour == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <h6>Imię przewodnika: @tour.UserName</h6>
+                <h6>Nazwisko przewodnika: @tour.Surname</h6>
+                <h6>Awatar: </h6>
+                @if (tour.ProfilePicture != "")
+                        {
+                            <div>
+                                <img src="@tour.ProfilePicture" style="display: block; max-width: 350px; height: auto;"/>
+                            </div>
+                              
+
+                        }
+                <h6>Email: @tour.Email</h6>
+                <h6>Numer telefonu: @tour.PhoneNumber</h6>
+                <h6>Data ostatniego logowania użytkownika: @tour.LastLoginDate</h6>
+                <h6>Tytuł wycieczki: @tour.TourName</h6>
+                <h6>Opis wycieczki: @tour.Description</h6>
+                @if (tour.MainPhoto != "")
+                {
+                    <div>
+                        <img src="@tour.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
+                    </div>
+                }
+                <h6>Mapa:</h6>
+                @if(tour.MapPhoto != "")
+                {
+                    <div>
+                        <img src="@tour.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
+                    </div>
+                }
+                <h6>Miejsce spotkania: @tour.MeetingPlace</h6>
+                <h6>Koniec wycieczki: @tour.EndPlace</h6>
+                <h6>Czas trwania: @tour.Length</h6>
+                <h6>Terminy:</h6>
+
+                @foreach(var item in @tour.TourDates)
+                {
+                    <h6>@item.TourDate w cenie: @item.Price</h6>
+                }
+
+                <h6>Dodatkowe zdjęcia:</h6>
+                @foreach(var item in @tour.TourPhotos)
+                {
+                    @if(item.TourPhoto != "")
+                        {
+                            <div>
+                                <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
+                            </div>
+                        }
+                }
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private TourVm tour;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        tour = await Http.GetFromJsonAsync<TourVm>($"api/tours/{Id}");
+    }
+}
+

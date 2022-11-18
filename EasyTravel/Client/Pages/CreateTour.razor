@@ -1,0 +1,222 @@
+﻿@page "/tours/CreateTour"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using System.Text.Json
+@using System.Text
+@using System.Net.Http.Headers
+@using System.Globalization
+
+<div class="page" style="padding: 10px;">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+            <h3>CreateTour</h3>
+            <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
+                <DataAnnotationsValidator />
+                <div class="form-row">
+                    <label>Nazwa wycieczki</label>
+                    <InputText @bind-Value="@model.Name" class="form-control" />
+                    <ValidationMessage For="@(() => model.Name)" />
+                </div>
+                <div class="form-row">
+                    <label>Opis</label>
+                    <InputTextArea @bind-Value="@model.Description" class="form-control" />
+                    <ValidationMessage For="@(() => model.Description)" />
+                </div>
+                <div class="form-row">
+                    <label>Miejsce spotkania</label>
+                    <InputText @bind-Value="@model.MeetingPlace" class="form-control" />
+                    <ValidationMessage For="@(() => model.MeetingPlace)" />
+                </div>
+                <div class="form-row">
+                    <label>Miejsce zakończenia wycieczki</label>
+                    <InputText @bind-Value="@model.EndPlace" class="form-control" />
+                    <ValidationMessage For="@(() => model.EndPlace)" />
+                </div>
+                <div class="form-row">
+                    <label>Długość trwania wycieczki</label>
+                    <InputText @bind-Value="@model.Length" class="form-control" />
+                    <ValidationMessage For="@(() => model.Length)" />
+                </div>
+                <br />
+                <div>
+                    <h6>Prześlij główne zdjęcie reprezentujące twoją wycieczkę (będzie się ono wyświetlać na stronie głównej):</h6>
+                @if (model.MainPhoto != "")
+                {
+                    <div>
+                        <img src="@model.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
+                    </div>
+                }
+                <InputFile OnChange="@HandleSelectedMainPhotoTour" />
+                </div>
+                <br />
+                <div>
+                <h6>Prześlij zdjęcie mapki, z zaznaczaniem trasy według której będzie przebiegać wycieczka</h6> 
+                @if(model.MapPhoto != "")
+                {
+                    <div>
+                        <img src="@model.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
+                    </div>
+                }
+                <InputFile OnChange="@HandleSelectedMapPhoto" />
+                </div>
+                <br />
+                <div>
+                    <input id="AddButton" type="button" class="btn btn-warning" value="Dodaj termin wycieczki" @onclick="AddTerm" />
+                    @if (Terms.Count() != 0)
+                    {
+                        @foreach(var item in Terms)
+                        {
+                            <br />
+                            <div class="form-group">
+                            <label for="createdDate" class="col-sm-3">Data planowanej wycieczki:</label><br />
+                            <InputDateTime id="termTour" class="form-control col-sm-8" @bind-Value="@item.TourDate"></InputDateTime>
+                            </div>
+                            <br />
+                            <label>Cena</label><br />
+                            <input type="number" step="0.01" @bind-value="@item.Price"/>
+                        }
+                    
+                    }
+                </div>
+                <br />
+                <div>
+                    <h6>Miejsce na dodatkowe zdjęcia</h6> <br />
+                    <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
+                    i
+                    @foreach(var item in AdditionalPhotos)
+                    {
+                        @if(item.TourPhoto != "")
+                        {
+                            <div>
+                                <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
+                            </div><br />
+                        }
+                    }
+                </div>
+                <br /><br />
+                <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                <button type="reset" class="btn btn-danger">Wyczyść</button>
+                <a class="btn btn-info" href="/">Powrót</a>
+
+
+
+
+
+
+
+
+
+
+            </EditForm>
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+@code {
+    public string FileUrlMain { get; set; } = "";
+    public string FileTypeMain { get; set; }
+    public string FileUrlMap { get; set; } = "";
+    public string FileTypeMap { get; set; }
+    public string FileTypeAdditionalPhoto { get; set; }
+    public long Ticks = new DateTime(2000, 01, 01, 00, 00, 00, new CultureInfo("pl-PL", false).Calendar).Ticks;
+    public CreateTourForm model = new CreateTourForm();
+    public EditContext editContext;
+    public List<TourDateDTO> Terms = new List<TourDateDTO>();
+    public List<TourPhotoDTO> AdditionalPhotos = new List<TourPhotoDTO>();
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        Terms = Terms.Where(a => a.TourDate != new DateTime(Ticks) && a.Price != 0.00f).ToList();
+        model.TourDates = Terms;
+        model.TourPhotos = AdditionalPhotos;
+        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+        await Http.PostAsync("api/tours/create-tour", content);
+        Navigation.NavigateTo("/");
+    }
+
+    private void HandleReset()
+    {
+        model = new CreateTourForm();
+        editContext = new EditContext(model);
+        FileUrlMain = "";
+    }
+
+    private async Task HandleSelectedMainPhotoTour(InputFileChangeEventArgs e)
+    {
+        FileUrlMain = "";
+        var file = e.File;
+        FileTypeMain = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileTypeMain, file.Name);
+            var response = await Http.PostAsync("api/upload/tour", content);
+            FileUrlMain = await response.Content.ReadAsStringAsync();
+            model.MainPhoto = FileUrlMain;
+        }
+    }
+
+    private async Task HandleSelectedMapPhoto(InputFileChangeEventArgs e)
+    {
+        FileUrlMap = "";
+        var file = e.File;
+        FileTypeMap = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileTypeMap, file.Name);
+            var response = await Http.PostAsync("api/upload/tour", content);
+            FileUrlMap = await response.Content.ReadAsStringAsync();
+            model.MapPhoto = FileUrlMap;
+        }
+    }
+
+    private async Task HandleSelectedAdditionalPhoto(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        FileTypeAdditionalPhoto = file.ContentType;
+        if (file == null)
+            return;
+        using (var ms = file.OpenReadStream(file.Size))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            content.Add(new StreamContent(ms, Convert.ToInt32(file.Size)), FileTypeAdditionalPhoto, file.Name);
+            var response = await Http.PostAsync("api/upload/tour", content);
+            string photoUrl = await response.Content.ReadAsStringAsync();
+            TourPhotoDTO tp = new TourPhotoDTO();
+            tp.TourPhoto = photoUrl;
+            AdditionalPhotos.Add(tp);
+            StateHasChanged();
+        }
+    }
+
+    private void AddTerm()
+    {
+        TourDateDTO t = new TourDateDTO();
+
+        t.TourDate = new DateTime(Ticks);
+        t.Price = 0.00f;
+        Terms.Add(t);
+        for(int i = 0; i < Terms.Count(); i++)
+        {
+            Console.WriteLine(Terms[i].TourDate + "  " + Terms[i].Price);
+        }
+        Console.WriteLine(Terms.Count);
+        StateHasChanged();
+    }
+}

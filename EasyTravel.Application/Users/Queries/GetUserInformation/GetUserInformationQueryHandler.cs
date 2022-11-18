@@ -27,7 +27,7 @@ namespace EasyTravel.Application.Users.Queries.GetUserInformation
             UserInformationVm userInformation = new UserInformationVm();
             using (SqlConnection sqlConnection = new SqlConnection(Resources.ConnectionString))
             {
-                sqlConnection.Open();
+                await sqlConnection.OpenAsync();
 
                 using (SqlCommand sqlCommand = new SqlCommand(PROCEDURE_NAME, sqlConnection) { CommandType = System.Data.CommandType.StoredProcedure })
                 {
@@ -43,7 +43,7 @@ namespace EasyTravel.Application.Users.Queries.GetUserInformation
                             userInformation.Surname = sqlDataReader.GetString("Surname");
                             userInformation.ProfilePicture = sqlDataReader.GetString("Profile_picture");
                             userInformation.Email = sqlDataReader.GetString("Contact_email");
-                            userInformation.PhoneNumber = sqlDataReader.GetString("Phone_Number");
+                            userInformation.PhoneNumber = sqlDataReader.GetString("Phone_number");
                             userInformation.RegistrationDate = sqlDataReader.GetDateTime("Registration_date");
                             userInformation.LastLoginDate = sqlDataReader.GetDateTime("Last_login_date");
 
@@ -51,7 +51,7 @@ namespace EasyTravel.Application.Users.Queries.GetUserInformation
                     }
 
                 }
-                sqlConnection.Close();
+                await sqlConnection.CloseAsync();
 
             }
 

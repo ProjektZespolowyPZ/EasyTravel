@@ -16,15 +16,8 @@
         </div>
      
         <MudButton Variant="Variant.Text" @onclick="BeginSignOut" Style="color: white;" >Wyloguj</MudButton>
-       
-        
-        <MudMenu Label="Mój profil" Variant="Variant.Filled" Color="Color.Secondary">
-            <MudMenuItem><a class="link" href="/users/GetUserInformation">Pokaż profil</a></MudMenuItem>
-            <MudMenuItem OnClick="@EditProfile">Zmiana danych</MudMenuItem>
-          
-            
-        
-        </MudMenu>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" Style="color: white;"><a class="link" style="color:white; font-weight: bold" href="/users/GetUserInformation">Pokaż profil</a></MudButton>
+
       
     </Authorized>
     
@@ -53,12 +46,6 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
-    }
-
-    public async void EditProfile()
-    {
-        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
-        Navigation.NavigateTo($"users/{user.Id}/EditProfile");
     }
 
 }

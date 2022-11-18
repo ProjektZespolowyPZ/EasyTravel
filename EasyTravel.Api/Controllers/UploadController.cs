@@ -36,7 +36,7 @@ namespace EasyTravel.Api.Controllers
                     }
                     else
                     {
-                        container = new BlobContainerClient(_azureConnectionString, "upload-container");
+                        container = new BlobContainerClient(_azureConnectionString, "tours");
                     }
                     var createResponse = await container.CreateIfNotExistsAsync();
                     if (createResponse != null && createResponse.GetRawResponse().Status == 201)
