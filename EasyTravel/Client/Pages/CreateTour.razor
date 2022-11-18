@@ -12,91 +12,100 @@
             <h3>CreateTour</h3>
             <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                 <DataAnnotationsValidator />
-                <div class="form-row">
-                    <label>Nazwa wycieczki</label>
-                    <InputText @bind-Value="@model.Name" class="form-control" />
-                    <ValidationMessage For="@(() => model.Name)" />
-                </div>
-                <div class="form-row">
-                    <label>Opis</label>
-                    <InputTextArea @bind-Value="@model.Description" class="form-control" />
-                    <ValidationMessage For="@(() => model.Description)" />
-                </div>
-                <div class="form-row">
-                    <label>Miejsce spotkania</label>
-                    <InputText @bind-Value="@model.MeetingPlace" class="form-control" />
-                    <ValidationMessage For="@(() => model.MeetingPlace)" />
-                </div>
-                <div class="form-row">
-                    <label>Miejsce zakończenia wycieczki</label>
-                    <InputText @bind-Value="@model.EndPlace" class="form-control" />
-                    <ValidationMessage For="@(() => model.EndPlace)" />
-                </div>
-                <div class="form-row">
-                    <label>Długość trwania wycieczki</label>
-                    <InputText @bind-Value="@model.Length" class="form-control" />
-                    <ValidationMessage For="@(() => model.Length)" />
-                </div>
-                <br />
-                <div>
-                    <h6>Prześlij główne zdjęcie reprezentujące twoją wycieczkę (będzie się ono wyświetlać na stronie głównej):</h6>
-                @if (model.MainPhoto != "")
-                {
-                    <div>
-                        <img src="@model.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
+                <div class="section1">
+                    <div class="form-row">
+                        <label>Nazwa wycieczki</label>
+                        <InputText @bind-Value="@model.Name" class="form-control" />
+                        <ValidationMessage For="@(() => model.Name)" />
                     </div>
-                }
-                <InputFile OnChange="@HandleSelectedMainPhotoTour" />
-                </div>
-                <br />
-                <div>
-                <h6>Prześlij zdjęcie mapki, z zaznaczaniem trasy według której będzie przebiegać wycieczka</h6> 
-                @if(model.MapPhoto != "")
-                {
-                    <div>
-                        <img src="@model.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
+                    <div class="form-row">
+                        <label>Opis</label>
+                        <InputTextArea @bind-Value="@model.Description" class="form-control" />
+                        <ValidationMessage For="@(() => model.Description)" />
                     </div>
-                }
-                <InputFile OnChange="@HandleSelectedMapPhoto" />
+                    <div class="form-row">
+                        <label>Miejsce spotkania</label>
+                        <InputText @bind-Value="@model.MeetingPlace" class="form-control" />
+                        <ValidationMessage For="@(() => model.MeetingPlace)" />
+                    </div>
+                    <div class="form-row">
+                        <label>Miejsce zakończenia wycieczki</label>
+                        <InputText @bind-Value="@model.EndPlace" class="form-control" />
+                        <ValidationMessage For="@(() => model.EndPlace)" />
+                    </div>
+                    <div class="form-row">
+                        <label>Długość trwania wycieczki</label>
+                        <InputText @bind-Value="@model.Length" class="form-control" />
+                        <ValidationMessage For="@(() => model.Length)" />
+                    </div>
+                    <br />
                 </div>
-                <br />
-                <div>
-                    <input id="AddButton" type="button" class="btn btn-warning" value="Dodaj termin wycieczki" @onclick="AddTerm" />
-                    @if (Terms.Count() != 0)
-                    {
-                        @foreach(var item in Terms)
-                        {
-                            <br />
-                            <div class="form-group">
-                            <label for="createdDate" class="col-sm-3">Data planowanej wycieczki:</label><br />
-                            <InputDateTime id="termTour" class="form-control col-sm-8" @bind-Value="@item.TourDate"></InputDateTime>
-                            </div>
-                            <br />
-                            <label>Cena</label><br />
-                            <input type="number" step="0.01" @bind-value="@item.Price"/>
-                        }
-                    
-                    }
-                </div>
-                <br />
-                <div>
-                    <h6>Miejsce na dodatkowe zdjęcia</h6> <br />
-                    <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
-                    i
-                    @foreach(var item in AdditionalPhotos)
-                    {
-                        @if(item.TourPhoto != "")
+                <div class="section2">
+                    <div>
+                        <div class="section2Heading"><i class="far fa-image fa-3x"</i><h5>Zdjęcie główne</h5></div>
+                        <p>Prześlij główne zdjęcie reprezentujące twoją wycieczkę (będzie się ono wyświetlać na stronie głównej):</p>
+                        @if (model.MainPhoto != "")
                         {
                             <div>
-                                <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
-                            </div><br />
+                                <img src="@model.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
+                            </div>
                         }
-                    }
+                        <InputFile OnChange="@HandleSelectedMainPhotoTour" />
+                    </div>
+                    <hr />
+                    <div>
+                        <div class="section2Heading"><i class="far fa-map fa-3x"</i><h5>Trasa</h5></div>
+                        <p>Prześlij zdjęcie mapki, z zaznaczaniem trasy według której będzie przebiegać wycieczka</p> 
+                        @if(model.MapPhoto != "")
+                        {
+                            <div>
+                                <img src="@model.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
+                            </div>
+                        }
+                        <InputFile OnChange="@HandleSelectedMapPhoto" />
+                    </div>
+                    <hr />
+                    <div>
+                        <div class="section2Heading"><i class="far fa-images fa-3x"</i><h5>Zdjęcia dodatkowe</h5></div>
+                        <p>Miejsce na dodatkowe zdjęcia</p>
+                        <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
+                        i
+                        @foreach(var item in AdditionalPhotos)
+                        {
+                            @if(item.TourPhoto != "")
+                            {
+                                <div>
+                                    <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
+                                </div><br />
+                            }
+                        }
+                    </div>
+                    <hr /> 
+                    <div>
+                        <input id="AddButton" type="button" class="btn btn-warning" value="Dodaj termin wycieczki" @onclick="AddTerm" />
+                        @if (Terms.Count() != 0)
+                        {
+                            @foreach (var item in Terms)
+                            {
+                                <br />
+                                <div class="form-group">
+                                    <label for="createdDate" class="col-sm-3">Data planowanej wycieczki:</label><br />
+                                    <InputDateTime id="termTour" class="form-control col-sm-8" @bind-Value="@item.TourDate"></InputDateTime>
+                                </div>
+                                <br />
+                                <label>Cena</label>
+
+                                <br />
+                                <input type="number" step="0.01" @bind-value="@item.Price" />
+                            }
+
+                        }
+                    </div>
+                    <br /><br />
+                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                    <button type="reset" class="btn btn-danger">Wyczyść</button>
+                    <a class="btn btn-info" href="/">Powrót</a>
                 </div>
-                <br /><br />
-                <button type="submit" class="btn btn-primary">Zatwierdź</button>
-                <button type="reset" class="btn btn-danger">Wyczyść</button>
-                <a class="btn btn-info" href="/">Powrót</a>
 
 
 
