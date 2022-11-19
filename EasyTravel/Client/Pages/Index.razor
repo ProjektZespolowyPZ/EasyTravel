@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
 <div class="page">
     <AuthorizeView>
@@ -44,8 +45,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        tours = await Http.GetFromJsonAsync<ToursVm>("api/tours");
-        tours.Tours.Reverse();
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var isAuthenticated = authState.User.Identity.IsAuthenticated;
+        if (isAuthenticated)
+        {
+            tours = await Http.GetFromJsonAsync<ToursVm>("api/tours");
+            tours.Tours.Reverse();
+        }
     }
 
     public void GoToDetails(int id)
