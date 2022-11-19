@@ -1,6 +1,11 @@
 ﻿.body-container {
   margin-top: 60px;
   padding-bottom: 40px; }
+.login-window {
+    margin: auto;
+    width: 50%;
+    box-shadow: 5px 10px #C5CAE9;
+}
 
 .welcome-page li {
   list-style: none;
@@ -22,3 +27,24 @@
       height: 100px; }
   .grants-page .card label {
     font-weight: bold; }
+.main-page {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 20px;
+    max-width: none;
+    background-color: #1A6EED;
+    height: 100vh;
+}
+.logo {
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
+.login-form {
+    max-width: 340px;
+    padding: 5px;
+}
+.bottom-bar{
+    padding-top: 10px;
+}
+

@@ -1,15 +1,16 @@
 @model LoginViewModel
 
 <div>
-    <center><h2 style="color: white;padding: 5px;">EasyTravel</h2></center>
+    
+    <h2 class="logo">EasyTravel</h2>
 
     <partial name="_ValidationSummary" />
 
-    <div style="margin:auto;width:50%;box-shadow: 5px 10px #C5CAE9">
+    <div class="login-window">
 
         @if (Model.EnableLocalLogin)
         {
-            <div  style="max-width: 100%;">
+            <div>
                 <div class="card">
                     <div class="card-header">
                         <h2>Logowanie</h2>
@@ -19,11 +20,10 @@
                         <form asp-route="Login">
                             <input type="hidden" asp-for="ReturnUrl" />
 
-                            <div class="form-group" style="max-width: 340px;padding: 5px;">
-                                
+                            <div class="login-form">                                
                                 <input class="form-control" placeholder="Login" asp-for="Username" autofocus>
                             </div>
-                            <div class="form-group" style="max-width: 340px;padding: 5px;">
+                            <div class="login-form">
                                 
                                 <input type="password" class="form-control" placeholder="Hasło" asp-for="Password" autocomplete="off">
                             </div>
@@ -33,7 +33,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="RememberLogin">
                                         <label class="form-check-label" asp-for="RememberLogin">
-                                            Zapamiętaj haslo
+                                            Zapamiętaj hasło
                                         </label>
                                     </div>
                                 </div>
