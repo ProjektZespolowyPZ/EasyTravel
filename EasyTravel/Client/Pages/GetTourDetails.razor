@@ -16,55 +16,67 @@
             }
             else
             {
-                <h6>Imię przewodnika: @tour.UserName</h6>
-                <h6>Nazwisko przewodnika: @tour.Surname</h6>
-                <h6>Awatar: </h6>
-                @if (tour.ProfilePicture != "")
-                        {
-                            <div>
-                                <img src="@tour.ProfilePicture" style="display: block; max-width: 350px; height: auto;"/>
-                            </div>
+                <div class="leftSection">
+                    <h4>Dane przewodnika</h4>
+                    <hr/>
+                    <div class="userDetails"><i class="far fa-user-circle fa-2x"></i><h6>@tour.UserName @tour.Surname</h6></div>
+                    <hr />
+                    @if (tour.ProfilePicture != "")
+                            {
+                                <div>
+                                    <img src="@tour.ProfilePicture" style="display: block; max-width: 250px; height: auto;"/>
+                                </div>
                               
 
-                        }
-                <h6>Email: @tour.Email</h6>
-                <h6>Numer telefonu: @tour.PhoneNumber</h6>
-                <h6>Data ostatniego logowania użytkownika: @tour.LastLoginDate</h6>
-                <h6>Tytuł wycieczki: @tour.TourName</h6>
-                <h6>Opis wycieczki: @tour.Description</h6>
-                @if (tour.MainPhoto != "")
-                {
-                    <div>
-                        <img src="@tour.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
-                    </div>
-                }
-                <h6>Mapa:</h6>
-                @if(tour.MapPhoto != "")
-                {
-                    <div>
-                        <img src="@tour.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
-                    </div>
-                }
-                <h6>Miejsce spotkania: @tour.MeetingPlace</h6>
-                <h6>Koniec wycieczki: @tour.EndPlace</h6>
-                <h6>Czas trwania: @tour.Length</h6>
-                <h6>Terminy:</h6>
+                            }
+                    <hr />
+                    <div class="userDetails"><i class="far fa-envelope-open fa-2x"></i><h6>@tour.Email</h6></div>
+                    <div class="userDetails"><i class="fas fa-phone fa-2x"></i><h6>@tour.PhoneNumber</h6></div>
+                    <hr />
+                    <h6>Data ostatniego logowania użytkownika: @tour.LastLoginDate</h6>
+                </div>
+                <div class="rightSection">
+                    <h2>@tour.TourName</h2>
+                    <h5>@tour.Description</h5>
+                    <hr />
+                    @if (tour.MainPhoto != "")
+                    {
+                        <div>
+                            <img src="@tour.MainPhoto" style="display: block; max-width: 600px; height: auto;" />
+                        </div>
+                    }
+                    <hr />
+                    @if(tour.MapPhoto != "")
+                    {
+                        <div>
+                            <img src="@tour.MapPhoto" style="display: block; max-width: 600px; height: auto;" />
+                        </div>
+                    }
+                    <hr/>
+                    <div class="tripInfo">
+                        <h4>Informacje</h4>
+                        <div class="tripDetails"><i class="fas fa-map-marked-alt fa-2x"></i><p>Miejsce spotkania: @tour.MeetingPlace</p></div>
+                        <div class="tripDetails"><i class="fas fa-map-marked fa-2x"></i><p>Koniec wycieczki: @tour.EndPlace</p></div>
+                        <div class="tripDetails"><i class="fas fa-clock fa-2x"></i><p>Czas trwania: @tour.Length</p></div>
+                        <div class="tripDetails"><i class="far fa-calendar alt fa-2x"></i><p>Terminy:</p></div>
 
-                @foreach(var item in @tour.TourDates)
-                {
-                    <h6>@item.TourDate w cenie: @item.Price</h6>
-                }
-
-                <h6>Dodatkowe zdjęcia:</h6>
-                @foreach(var item in @tour.TourPhotos)
-                {
-                    @if(item.TourPhoto != "")
+                        @foreach(var item in @tour.TourDates)
                         {
-                            <div>
-                                <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
-                            </div>
+                            <p>@item.TourDate w cenie: @item.Price</p>
                         }
-                }
+                    </div>
+                    <hr/>
+                    <h6>Dodatkowe zdjęcia:</h6>
+                    @foreach(var item in @tour.TourPhotos)
+                    {
+                        @if(item.TourPhoto != "")
+                            {
+                                <div>
+                                    <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
+                                </div>
+                            }
+                    }
+                </div>
             }
         </Authorized>
         <NotAuthorized>
@@ -83,4 +95,47 @@
         tour = await Http.GetFromJsonAsync<TourVm>($"api/tours/{Id}");
     }
 }
+
+<style>
+
+    .page {
+        margin: 50px;
+    }
+    .leftSection {
+        width: 350px;
+        float: left;
+        background-color: lightgrey;
+        height: 800px;
+        padding: 20px;
+    }
+
+    .userDetails h6, .userDetails i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+    
+    .rightSection {
+        margin-left: 360px;
+    }
+
+    .rightSection h5 {
+        color:darkgrey;
+    }
+    .tripInfo h4{
+        color: darkgrey;
+    }
+    .tripInfo p{
+        color: black;
+        font-size: 18px;
+        line-height:0.7;
+    }
+
+    .tripDetails p, .tripDetails i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+    
+</style>
 
