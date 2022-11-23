@@ -18,9 +18,7 @@
             {
                 <div class="leftSection">
                     <h4>Dane przewodnika</h4>
-                    <hr/>
-                    <div class="userDetails"><i class="far fa-user-circle fa-2x"></i><h6>@tour.UserName @tour.Surname</h6></div>
-                    <hr />
+                    <br/>
                     @if (tour.ProfilePicture != "")
                             {
                                 <div>
@@ -29,11 +27,23 @@
                               
 
                             }
-                    <hr />
+                    <div class="userDetails"><i class="far fa-user-circle fa-2x"></i><h6>@tour.UserName @tour.Surname</h6></div>
                     <div class="userDetails"><i class="far fa-envelope-open fa-2x"></i><h6>@tour.Email</h6></div>
                     <div class="userDetails"><i class="fas fa-phone fa-2x"></i><h6>@tour.PhoneNumber</h6></div>
-                    <hr />
-                    <h6>Data ostatniego logowania użytkownika: @tour.LastLoginDate</h6>
+                    <hr/>
+                    <div class="tripInfo">
+                        <h4>Informacje</h4>
+                        <div class="tripDetails"><i class="fas fa-map-marked-alt fa-2x"></i><p>Miejsce spotkania: </p></div><p>   @tour.MeetingPlace</p>
+                        <div class="tripDetails"><i class="fas fa-map-marked fa-2x"></i><p>Koniec wycieczki: </p></div><p>   @tour.EndPlace</p>
+                        <div class="tripDetails"><i class="fas fa-clock fa-2x"></i><p>Czas trwania: </p></div><p>   @tour.Length</p>
+                        <div class="tripDetails"><i class="far fa-calendar alt fa-2x"></i><p>Terminy:</p></div>
+
+                        @foreach (var item in @tour.TourDates)
+                        {
+                            <p>@item.TourDate</p> 
+                            <p>w cenie: @item.Price</p>
+                        }
+                    </div>
                 </div>
                 <div class="rightSection">
                     <h2>@tour.TourName</h2>
@@ -52,19 +62,6 @@
                             <img src="@tour.MapPhoto" style="display: block; max-width: 600px; height: auto;" />
                         </div>
                     }
-                    <hr/>
-                    <div class="tripInfo">
-                        <h4>Informacje</h4>
-                        <div class="tripDetails"><i class="fas fa-map-marked-alt fa-2x"></i><p>Miejsce spotkania: @tour.MeetingPlace</p></div>
-                        <div class="tripDetails"><i class="fas fa-map-marked fa-2x"></i><p>Koniec wycieczki: @tour.EndPlace</p></div>
-                        <div class="tripDetails"><i class="fas fa-clock fa-2x"></i><p>Czas trwania: @tour.Length</p></div>
-                        <div class="tripDetails"><i class="far fa-calendar alt fa-2x"></i><p>Terminy:</p></div>
-
-                        @foreach(var item in @tour.TourDates)
-                        {
-                            <p>@item.TourDate w cenie: @item.Price</p>
-                        }
-                    </div>
                     <hr/>
                     <h6>Dodatkowe zdjęcia:</h6>
                     @foreach(var item in @tour.TourPhotos)
@@ -102,11 +99,15 @@
         margin: 50px;
     }
     .leftSection {
-        width: 350px;
+        width: 360px;
         float: left;
         background-color: lightgrey;
-        height: 800px;
+        height: 840px;
         padding: 20px;
+    }
+
+    .leftSection h4{
+        color: dimgrey;
     }
 
     .userDetails h6, .userDetails i {
@@ -116,14 +117,15 @@
     }
     
     .rightSection {
-        margin-left: 360px;
+        margin-left: 370px;
     }
 
     .rightSection h5 {
         color:darkgrey;
     }
     .tripInfo h4{
-        color: darkgrey;
+        /*color: darkgrey;*/
+        color: dimgrey;
     }
     .tripInfo p{
         color: black;
