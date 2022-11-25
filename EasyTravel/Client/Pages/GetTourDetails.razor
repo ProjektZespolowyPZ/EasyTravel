@@ -40,8 +40,11 @@
 
                         @foreach (var item in @tour.TourDates)
                         {
-                            <p>@item.TourDate</p> 
-                            <p>w cenie: @item.Price</p>
+                            @if (item.TourDate > DateTime.Now)
+                            {
+                                <p>@item.TourDate</p> 
+                                <p>w cenie: @item.Price</p>
+                            }
                         }
                     </div>
                 </div>

@@ -164,7 +164,7 @@
 
             model1.Id = user.Id;
             model1.Avatar = user.ProfilePicture;
-            var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+            var modelJson = JsonSerializer.Serialize(model1, new JsonSerializerOptions { WriteIndented = true });
             var content1 = new StringContent(modelJson, Encoding.UTF8, "application/json");
             await Http.PutAsync("api/users/update-avatar", content1);
         }

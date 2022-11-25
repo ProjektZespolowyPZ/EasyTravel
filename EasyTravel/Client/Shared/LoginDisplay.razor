@@ -6,7 +6,7 @@
    
     <Authorized>
         
-        <div class="logo">Logo</div>
+        <div class="logo" @onclick="GoToMainPage">Logo</div>
         <div class="search">
             <form>
                 <input type="text" placeholder="Znajdz przewodnika/wycieczke" name="search">
@@ -46,6 +46,11 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
+    }
+
+    private void GoToMainPage()
+    {
+        Navigation.NavigateTo("/");
     }
 
 }

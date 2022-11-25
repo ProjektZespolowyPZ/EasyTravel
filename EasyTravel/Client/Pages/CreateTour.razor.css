@@ -5,6 +5,7 @@
     float: left;
     margin: 5px;
     padding: 10px;
+    max-width: 30vw;
 }
 
 .section2 {

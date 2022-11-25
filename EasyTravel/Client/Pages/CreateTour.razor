@@ -51,6 +51,7 @@
                             </div>
                         }
                         <InputFile OnChange="@HandleSelectedMainPhotoTour" />
+                        <ValidationMessage For="@(() => model.MainPhoto)" />
                     </div>
                     <hr />
                     <div>
@@ -69,7 +70,6 @@
                         <div class="section2Heading"><i class="far fa-images fa-3x"</i><h5>Zdjęcia dodatkowe</h5></div>
                         <p>Miejsce na dodatkowe zdjęcia</p>
                         <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
-                        i
                         @foreach(var item in AdditionalPhotos)
                         {
                             @if(item.TourPhoto != "")
@@ -83,6 +83,7 @@
                     <hr /> 
                     <div>
                         <input id="AddButton" type="button" class="btn btn-warning" value="Dodaj termin wycieczki" @onclick="AddTerm" />
+                        <h6 style="color: red">@ValidateTerms</h6>
                         @if (Terms.Count() != 0)
                         {
                             @foreach (var item in Terms)
@@ -91,12 +92,17 @@
                                 <div class="form-group">
                                     <label for="createdDate" class="col-sm-3">Data planowanej wycieczki:</label><br />
                                     <InputDateTime id="termTour" class="form-control col-sm-8" @bind-Value="@item.TourDate"></InputDateTime>
+                                    <ValidationMessage For="@(() => item.TourDate)" />
                                 </div>
                                 <br />
                                 <label>Cena</label>
 
                                 <br />
                                 <input type="number" step="0.01" @bind-value="@item.Price" />
+                                @if(item.Price < 0)
+                                {
+                                    <p style="color: red">Cena nie może być ujemna.</p>
+                                }
                             }
 
                         }
@@ -129,11 +135,11 @@
     public string FileUrlMap { get; set; } = "";
     public string FileTypeMap { get; set; }
     public string FileTypeAdditionalPhoto { get; set; }
-    public long Ticks = new DateTime(2000, 01, 01, 00, 00, 00, new CultureInfo("pl-PL", false).Calendar).Ticks;
     public CreateTourForm model = new CreateTourForm();
     public EditContext editContext;
     public List<TourDateDTO> Terms = new List<TourDateDTO>();
     public List<TourPhotoDTO> AdditionalPhotos = new List<TourPhotoDTO>();
+    public string ValidateTerms = "";
 
     protected override void OnInitialized()
     {
@@ -142,13 +148,21 @@
 
     private async void HandleValidSubmit()
     {
-        Terms = Terms.Where(a => a.TourDate != new DateTime(Ticks) && a.Price != 0.00f).ToList();
+        Terms = Terms.Where(a => a.TourDate > DateTime.Now && a.Price >= 0.00f).ToList();
         model.TourDates = Terms;
         model.TourPhotos = AdditionalPhotos;
-        var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
-        var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
-        await Http.PostAsync("api/tours/create-tour", content);
-        Navigation.NavigateTo("/");
+        if (Terms.Count != 0)
+        {
+            ValidateTerms = "";
+            var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+            var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+            await Http.PostAsync("api/tours/create-tour", content);
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            ValidateTerms = "Proszę podać prawidłowe terminy.";
+        }
     }
 
     private void HandleReset()
@@ -218,7 +232,7 @@
     {
         TourDateDTO t = new TourDateDTO();
 
-        t.TourDate = new DateTime(Ticks);
+        t.TourDate = DateTime.Now;
         t.Price = 0.00f;
         Terms.Add(t);
         for(int i = 0; i < Terms.Count(); i++)
