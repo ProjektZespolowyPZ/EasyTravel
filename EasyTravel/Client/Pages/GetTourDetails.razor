@@ -42,8 +42,8 @@
                         {
                             @if (item.TourDate > DateTime.Now)
                             {
-                                <p>@item.TourDate</p> 
-                                <p>w cenie: @item.Price</p>
+                                <p>@item.TourDate</p>
+                                <div class="tripDetails"><i class="fas fa-money-bill fa-2x"></i><p>Cena: @item.Price</p></div>
                             }
                         }
                     </div>
@@ -105,8 +105,9 @@
         width: 360px;
         float: left;
         background-color: lightgrey;
-        height: 840px;
+        max-height: 1000px;
         padding: 20px;
+        display: inline-block;
     }
 
     .leftSection h4{

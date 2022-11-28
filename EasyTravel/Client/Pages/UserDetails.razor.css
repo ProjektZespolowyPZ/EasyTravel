@@ -19,7 +19,7 @@
     text-align: left;
     width: 1100px;
     height: 446px;
-    background-color: #f9e4ba;
+    background-color: lightgrey;
     float: left;
 }
 .left {
@@ -67,11 +67,11 @@ h3 {
     font-weight: 100;
 }
 .left h3 {
-    color: #2d2d2d;
-    font-weight: ;
+    color: dimgrey;
+    font-weight:;
 }
 .left h6 {
-    color: #EDA71A;
+    color: dimgrey;
     font-weight: 600;
 }
 
