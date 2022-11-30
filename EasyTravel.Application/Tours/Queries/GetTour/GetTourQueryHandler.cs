@@ -53,6 +53,7 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                                 TourDateDTO tourDate = new TourDateDTO();
                                 tourDate.TourDate = sqlDataReader.GetDateTime("Date_time");
                                 tourDate.Price = sqlDataReader.GetFloat("Price");
+                                tourDate.Password = sqlDataReader.GetString("Password");
 
                                 tour.TourDates.Add(tourDate);
                             }
@@ -68,6 +69,30 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                                 tour.TourPhotos.Add(tourPhoto1);
                             }
                         }
+
+                        if(sqlDataReader.NextResult())
+                        {
+                            int sumRating = 0;
+                            while(sqlDataReader.Read())
+                            {
+                                TourOpinionDTO tourOpinion = new TourOpinionDTO();
+                                tourOpinion.UserId = sqlDataReader.GetInt32("Id");
+                                tourOpinion.UserName = sqlDataReader.GetString("Name");
+                                tourOpinion.UserSurname = sqlDataReader.GetString("Surname");
+                                tourOpinion.Rating = sqlDataReader.GetInt32("Rating");
+                                tourOpinion.Comment = sqlDataReader.GetString("Comment");
+                                tourOpinion.OpinionDateTime = sqlDataReader.GetDateTime("Date_time");
+
+                                sumRating += tourOpinion.Rating;
+                                tour.TourOpinions.Add(tourOpinion);
+                            }
+                            if (tour.TourOpinions.Count != 0)
+                            {
+                                tour.AvarageRating = Math.Round((double)sumRating / tour.TourOpinions.Count, 2);
+                            }
+                        }
+
+
                     }
 
                 }

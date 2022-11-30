@@ -103,6 +103,13 @@
                                 {
                                     <p style="color: red">Cena nie może być ujemna.</p>
                                 }
+
+                                <br />
+                                <div class="form-row">
+                                    <label>Wpisz hasło, które przekażesz uczestnikom wycieczki, aby mogli Cię ocenić</label>
+                                    <InputText @bind-Value="@item.Password" class="form-control" />
+                                    <ValidationMessage For="@(() => item.Password)" />
+                                </div>
                             }
 
                         }
@@ -148,7 +155,7 @@
 
     private async void HandleValidSubmit()
     {
-        Terms = Terms.Where(a => a.TourDate > DateTime.Now && a.Price >= 0.00f).ToList();
+        Terms = Terms.Where(a => a.TourDate > DateTime.Now && a.Price >= 0.00f && a.Password != null).ToList();
         model.TourDates = Terms;
         model.TourPhotos = AdditionalPhotos;
         if (Terms.Count != 0)

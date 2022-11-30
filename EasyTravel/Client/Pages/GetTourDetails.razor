@@ -25,20 +25,20 @@
                                     <img src="@tour.ProfilePicture" style="display: block; max-width: 250px; height: auto;"/>
                                 </div>
                               
-
-                            }
+                   }
                     <div class="userDetails"><i class="far fa-user-circle fa-2x"></i><h6>@tour.UserName @tour.Surname</h6></div>
                     <div class="userDetails"><i class="far fa-envelope-open fa-2x"></i><h6>@tour.Email</h6></div>
                     <div class="userDetails"><i class="fas fa-phone fa-2x"></i><h6>@tour.PhoneNumber</h6></div>
                     <hr/>
                     <div class="tripInfo">
                         <h4>Informacje</h4>
+                        <p>Średnia ocena wycieczki: @tour.AvarageRating</p>
                         <div class="tripDetails"><i class="fas fa-map-marked-alt fa-2x"></i><p>Miejsce spotkania: </p></div><p>   @tour.MeetingPlace</p>
                         <div class="tripDetails"><i class="fas fa-map-marked fa-2x"></i><p>Koniec wycieczki: </p></div><p>   @tour.EndPlace</p>
                         <div class="tripDetails"><i class="fas fa-clock fa-2x"></i><p>Czas trwania: </p></div><p>   @tour.Length</p>
                         <div class="tripDetails"><i class="far fa-calendar alt fa-2x"></i><p>Terminy:</p></div>
 
-                        @foreach (var item in @tour.TourDates)
+                        @foreach (var item in tour.TourDates)
                         {
                             @if (item.TourDate > DateTime.Now)
                             {
@@ -70,11 +70,74 @@
                     @foreach(var item in @tour.TourPhotos)
                     {
                         @if(item.TourPhoto != "")
-                            {
+                        {
                                 <div>
                                     <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
                                 </div>
+                        }
+                        
+                    }
+
+                    @if (isAnyTourToRate)
+                    {
+                        <h5>Oceń wycieczkę</h5>
+
+                        <h6>Wybierz termin wycieczki na której byłeś i chcesz ją ocenić.</h6>
+
+                        @foreach (var item in tour.TourDates)
+                        {
+                            @if (item.TourDate < DateTime.Now)
+                            {
+                                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => ChosenTourDate(item)" >@item.TourDate</MudButton>
                             }
+                        }
+
+                        @if (passwordToChosenTerm != "")
+                        {
+                            <h6>Aby ocenić wycieczkę, podaj hasło otrzymane od przewodnika.</h6>
+                            <EditForm Model="@enterPassword" OnValidSubmit="@CheckPassword">
+
+                                <InputText @bind-Value="@enterPassword.Password" class="form-control" />
+                                <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary">Wyślij</MudButton>
+                            </EditForm>
+                        }
+
+                        @if (showPanelToOpinion)
+                        {
+                            <h6>Ocena</h6>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(1)" >1</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(2)" >2</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(3)" >3</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(4)" >4</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(5)" >5</MudButton>
+                            <h6 style="color: red">@ValidateRating</h6>
+                            <EditForm Model="@addOpinionForm" OnValidSubmit="@HandleValidSubmit">
+                                <div class="form-row">
+                                    <label>Komentarz</label>
+                                    <InputText @bind-Value="@addOpinionForm.Comment" class="form-control" />
+                                    <ValidationMessage For="@(() => addOpinionForm.Comment)" />
+                                </div>
+                                <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                            </EditForm>
+                        }
+                        else if (!showPanelToOpinion && passwordSend)
+                        {
+                            <h6 style="color: red">Podane hasło dla wybranego terminu jest nieprawidłowe.</h6>
+                        }
+                    }
+                    else
+                    {
+                        <h6>Nie odbyła się jeszcze żadna tura wycieczki. Tej wycieczki nie można jeszcze oceniać.</h6>
+                    }
+                    @foreach(var item in tour.TourOpinions)
+                    {
+                        <div style="background-color: aqua">
+                            <h6>@item.UserName @item.UserSurname</h6>
+                            <h6>Data oceny: @item.OpinionDateTime</h6>
+                            <h6>Ocena: @item.Rating</h6>
+                            <h6>Komentarz: @item.Comment</h6>
+                        </div>
+                        <br />
                     }
                 </div>
             }
@@ -88,11 +151,63 @@
     [Parameter]
     public int Id { get; set; }
     private TourVm tour;
+    private string passwordToChosenTerm = "";
+    private bool showPanelToOpinion = false;
+    private bool passwordSend = false;
+    private bool isAnyTourToRate = false;
+    public EnterPassword enterPassword { get; set; } = new EnterPassword();
+    public AddOpinionForm addOpinionForm { get; set; } = new AddOpinionForm();
+    public string ValidateRating = "";
 
 
     protected override async Task OnInitializedAsync()
     {
         tour = await Http.GetFromJsonAsync<TourVm>($"api/tours/{Id}");
+
+        @foreach (var item in tour.TourDates)
+        {
+            @if (item.TourDate < DateTime.Now)
+            {
+                isAnyTourToRate = true;
+                break;
+            }
+        }
+    }
+
+    public void ChosenTourDate(TourDateDTO tourDate)
+    {
+        passwordToChosenTerm = tourDate.Password;
+    }
+
+    public void CheckPassword()
+    {
+        passwordSend = true;
+        if (enterPassword.Password == passwordToChosenTerm) showPanelToOpinion = true;
+        else showPanelToOpinion = false;
+
+    }
+
+    public void AddRating(int rating)
+    {
+        addOpinionForm.Rating = rating;
+    }
+
+    private async void HandleValidSubmit()
+    {
+        if (addOpinionForm.Rating != 0)
+        {
+            ValidateRating = "";
+            addOpinionForm.DateTimeAddingOpinion = DateTime.Now;
+            addOpinionForm.IdTour = tour.Id;
+            var modelJson = JsonSerializer.Serialize(addOpinionForm, new JsonSerializerOptions { WriteIndented = true });
+            var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+            await Http.PostAsync("api/tours/add-opinion", content);
+            NavigationManager.NavigateTo($"/tours/{Id}", forceLoad:true);
+        }
+        else
+        {
+            ValidateRating = "Proszę wybrać ocenę.";
+        }
     }
 }
 

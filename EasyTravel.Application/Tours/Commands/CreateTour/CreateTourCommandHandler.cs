@@ -61,7 +61,7 @@ namespace EasyTravel.Application.Tours.Commands.CreateTour
                         sqlCommand.Parameters.Add("@id_tour", SqlDbType.Int).Value = idTour;
                         sqlCommand.Parameters.Add("@date_time", SqlDbType.DateTime).Value = item.TourDate;
                         sqlCommand.Parameters.Add("@price", SqlDbType.Float).Value = item.Price;
-                        
+                        sqlCommand.Parameters.Add("@password", SqlDbType.NVarChar).Value = item.Password;                        
                         sqlCommand.ExecuteNonQuery();
 
                     }

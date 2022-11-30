@@ -22,7 +22,9 @@ namespace EasyTravel.Shared
         public string MeetingPlace { get; set; }
         public string EndPlace { get; set; }
         public string Length { get; set; }
+        public double AvarageRating { get; set; }
         public List<TourDateDTO> TourDates { get; set; } = new List<TourDateDTO>();
         public List<TourPhotoDTO> TourPhotos { get; set; } = new List<TourPhotoDTO>();
+        public List<TourOpinionDTO> TourOpinions { get; set; } = new List<TourOpinionDTO>();
     }
 }
