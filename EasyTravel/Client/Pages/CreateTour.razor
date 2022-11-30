@@ -90,23 +90,21 @@
                             {
                                 <br />
                                 <div class="form-group">
-                                    <label for="createdDate" class="col-sm-3">Data planowanej wycieczki:</label><br />
+                                    <div class="section2Heading"><i class="far fa-calendar alt fa-3x"></i><h5><label for="createdDate">Data planowanej wycieczki</label></h5></div>
                                     <InputDateTime id="termTour" class="form-control col-sm-8" @bind-Value="@item.TourDate"></InputDateTime>
                                     <ValidationMessage For="@(() => item.TourDate)" />
                                 </div>
-                                <br />
-                                <label>Cena</label>
-
-                                <br />
+                                <div class="section2Heading"><i class="fas fa-money-bill fa-3x"></i><h5><label>Cena</label></h5></div>
                                 <input type="number" step="0.01" @bind-value="@item.Price" />
                                 @if(item.Price < 0)
                                 {
                                     <p style="color: red">Cena nie może być ujemna.</p>
                                 }
-
                                 <br />
+                                <hr/>
+                                <div class="section2Heading"><i class="fas fa-lock fa-3x"></i><h5><label>Hasło</label></h5></div>
                                 <div class="form-row">
-                                    <label>Wpisz hasło, które przekażesz uczestnikom wycieczki, aby mogli Cię ocenić</label>
+                                    <p><label>Wpisz hasło, które przekażesz uczestnikom wycieczki, aby mogli Cię ocenić</label></p>
                                     <InputText @bind-Value="@item.Password" class="form-control" />
                                     <ValidationMessage For="@(() => item.Password)" />
                                 </div>

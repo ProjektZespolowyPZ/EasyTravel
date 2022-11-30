@@ -32,7 +32,7 @@
                     <hr/>
                     <div class="tripInfo">
                         <h4>Informacje</h4>
-                        <p>Średnia ocena wycieczki: @tour.AvarageRating</p>
+                        <div class="tripDetails"><i class="far fa-star fa-2x"></i><p>Średnia ocena wycieczki: @tour.AvarageRating</p></div>
                         <div class="tripDetails"><i class="fas fa-map-marked-alt fa-2x"></i><p>Miejsce spotkania: </p></div><p>   @tour.MeetingPlace</p>
                         <div class="tripDetails"><i class="fas fa-map-marked fa-2x"></i><p>Koniec wycieczki: </p></div><p>   @tour.EndPlace</p>
                         <div class="tripDetails"><i class="fas fa-clock fa-2x"></i><p>Czas trwania: </p></div><p>   @tour.Length</p>
@@ -80,7 +80,9 @@
 
                     @if (isAnyTourToRate)
                     {
+                        <hr/>
                         <h5>Oceń wycieczkę</h5>
+                        <br/>
 
                         <h6>Wybierz termin wycieczki na której byłeś i chcesz ją ocenić.</h6>
 
@@ -91,19 +93,23 @@
                                 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="() => ChosenTourDate(item)" >@item.TourDate</MudButton>
                             }
                         }
+                        <br/>
 
                         @if (passwordToChosenTerm != "")
                         {
+                            <br/>
                             <h6>Aby ocenić wycieczkę, podaj hasło otrzymane od przewodnika.</h6>
                             <EditForm Model="@enterPassword" OnValidSubmit="@CheckPassword">
 
                                 <InputText @bind-Value="@enterPassword.Password" class="form-control" />
+                                <br/>
                                 <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary">Wyślij</MudButton>
                             </EditForm>
                         }
 
                         @if (showPanelToOpinion)
                         {
+                            <br/>
                             <h6>Ocena</h6>
                             <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(1)" >1</MudButton>
                             <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(2)" >2</MudButton>
@@ -111,27 +117,33 @@
                             <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(4)" >4</MudButton>
                             <MudButton Variant="Variant.Filled" Color="Color.Success" @onclick="() => AddRating(5)" >5</MudButton>
                             <h6 style="color: red">@ValidateRating</h6>
+                            <br/>
                             <EditForm Model="@addOpinionForm" OnValidSubmit="@HandleValidSubmit">
                                 <div class="form-row">
                                     <label>Komentarz</label>
                                     <InputText @bind-Value="@addOpinionForm.Comment" class="form-control" />
                                     <ValidationMessage For="@(() => addOpinionForm.Comment)" />
                                 </div>
+                                <br/>
                                 <button type="submit" class="btn btn-primary">Zatwierdź</button>
                             </EditForm>
                         }
                         else if (!showPanelToOpinion && passwordSend)
                         {
+                            <br/>
                             <h6 style="color: red">Podane hasło dla wybranego terminu jest nieprawidłowe.</h6>
                         }
                     }
                     else
                     {
+                        <br/>
                         <h6>Nie odbyła się jeszcze żadna tura wycieczki. Tej wycieczki nie można jeszcze oceniać.</h6>
                     }
                     @foreach(var item in tour.TourOpinions)
                     {
-                        <div style="background-color: aqua">
+                        <br/>
+                        <hr/>
+                        <div class="rating">
                             <h6>@item.UserName @item.UserSurname</h6>
                             <h6>Data oceny: @item.OpinionDateTime</h6>
                             <h6>Ocena: @item.Rating</h6>
@@ -257,6 +269,11 @@
         vertical-align: middle;
         margin: 10px;
     }
+
+.rating{
+    background-color: lightgrey;
+    padding: 10px;
+}
     
 </style>
 
