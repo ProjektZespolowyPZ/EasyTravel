@@ -4,15 +4,15 @@
 @inject HttpClient Http
 <AuthorizeView>
    
-    <Authorized>
+    <Authorized Context="Auth">
         
         @*<div class="logo" @onclick="GoToMainPage">Logo</div>*@
         <MudDivider Class="logo"></MudDivider><MudButton Variant="Variant.Text" @onclick="GoToMainPage" Style="color: white; font-size:28px;" >Logo</MudButton>
         <div class="search">
-            <form>
-                <input type="text" placeholder="Znajdz przewodnika/wycieczke" name="search">
+            <EditForm Model="@enterSearchingWord" OnValidSubmit="@Search">
+                <InputText placeholder="Znajdz przewodnika/wycieczke" @bind-Value="@enterSearchingWord.Word" style="width: 500px;padding: 6px;margin-top: 3px;margin-left: 15px;font-size: 17px;border: thick;" />
                 <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
+            </EditForm>
 
         </div>
      
@@ -28,7 +28,7 @@
         <div class="search">
             <form>
                 <input type="text" placeholder="Znajdz przewodnika/wycieczke" name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <button type="submit" @onclick="Search"><i class="fa fa-search"></i></button>
             </form>
             </div>   
         <a href="authentication/login" class="login">Zaloguj</a>
@@ -41,6 +41,8 @@
 
     private UserInformationVm user;
 
+    public EnterSearchingWord enterSearchingWord { get; set; } = new EnterSearchingWord();
+
     public string TextValue { get; set; }
 
     private async Task BeginSignOut(MouseEventArgs args)
@@ -51,7 +53,13 @@
 
     private void GoToMainPage()
     {
+        enterSearchingWord.Word = "";
         Navigation.NavigateTo("/");
+    }
+
+    private void Search()
+    {
+        Navigation.NavigateTo($"/searching/{enterSearchingWord.Word}");
     }
 
 }

@@ -28,5 +28,6 @@ namespace EasyTravel.Shared
         [Required(ErrorMessage = "Proszę podać poprawne terminy.")]
         public List<TourDateDTO> TourDates { get; set; } = new List<TourDateDTO>();
         public List<TourPhotoDTO> TourPhotos { get; set; } = new List<TourPhotoDTO>();
+        public List<TourTagDTO> TourTags { get; set; } = new List<TourTagDTO>();
     }
 }

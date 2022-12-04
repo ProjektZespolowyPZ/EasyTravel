@@ -17,6 +17,10 @@
             else
             {
                 <div class="leftSection">
+                    @if(user.Id == tour.UserId)
+                    {
+                        <button class="btn btn-danger" @onclick="DeleteTour">Usuń wycieczkę</button>
+                    }
                     <h4>Dane przewodnika</h4>
                     <br/>
                     @if (tour.ProfilePicture != "")
@@ -26,12 +30,17 @@
                                 </div>
                               
                    }
-                    <div class="userDetails"><i class="far fa-user-circle fa-2x"></i><h6>@tour.UserName @tour.Surname</h6></div>
+                    <a href="/users/@tour.UserId"><div class="userDetails"><i class="far fa-user-circle fa-2x"></i><h6>@tour.UserName @tour.Surname</h6></div></a>
                     <div class="userDetails"><i class="far fa-envelope-open fa-2x"></i><h6>@tour.Email</h6></div>
                     <div class="userDetails"><i class="fas fa-phone fa-2x"></i><h6>@tour.PhoneNumber</h6></div>
                     <hr/>
                     <div class="tripInfo">
                         <h4>Informacje</h4>
+                        <p>Tagi:</p>
+                        @foreach(var item in tour.TourTags)
+                        {
+                            <div class="tripDetails">#@item.Tag</div>
+                        }
                         <div class="tripDetails"><i class="far fa-star fa-2x"></i><p>Średnia ocena wycieczki: @tour.AvarageRating</p></div>
                         <div class="tripDetails"><i class="fas fa-map-marked-alt fa-2x"></i><p>Miejsce spotkania: </p></div><p>   @tour.MeetingPlace</p>
                         <div class="tripDetails"><i class="fas fa-map-marked fa-2x"></i><p>Koniec wycieczki: </p></div><p>   @tour.EndPlace</p>
@@ -144,7 +153,7 @@
                         <br/>
                         <hr/>
                         <div class="rating">
-                            <h6>@item.UserName @item.UserSurname</h6>
+                            <a href="/users/@item.UserId"><h6>@item.UserName @item.UserSurname</h6></a>
                             <h6>Data oceny: @item.OpinionDateTime</h6>
                             <h6>Ocena: @item.Rating</h6>
                             <h6>Komentarz: @item.Comment</h6>
@@ -163,6 +172,7 @@
     [Parameter]
     public int Id { get; set; }
     private TourVm tour;
+    private UserInformationVm user;
     private string passwordToChosenTerm = "";
     private bool showPanelToOpinion = false;
     private bool passwordSend = false;
@@ -175,6 +185,7 @@
     protected override async Task OnInitializedAsync()
     {
         tour = await Http.GetFromJsonAsync<TourVm>($"api/tours/{Id}");
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
 
         @foreach (var item in tour.TourDates)
         {
@@ -221,59 +232,11 @@
             ValidateRating = "Proszę wybrać ocenę.";
         }
     }
+
+    private async void DeleteTour()
+    {
+        await Http.DeleteAsync($"api/tours/{tour.Id}");
+        NavigationManager.NavigateTo("/users/GetUserInformation");
+    }
 }
-
-<style>
-
-    .page {
-        margin: 50px;
-    }
-    .leftSection {
-        width: 360px;
-        float: left;
-        background-color: lightgrey;
-        max-height: 1000px;
-        padding: 20px;
-        display: inline-block;
-    }
-
-    .leftSection h4{
-        color: dimgrey;
-    }
-
-    .userDetails h6, .userDetails i {
-        display: inline-block;
-        vertical-align: middle;
-        margin: 10px;
-    }
-    
-    .rightSection {
-        margin-left: 370px;
-    }
-
-    .rightSection h5 {
-        color:darkgrey;
-    }
-    .tripInfo h4{
-        /*color: darkgrey;*/
-        color: dimgrey;
-    }
-    .tripInfo p{
-        color: black;
-        font-size: 18px;
-        line-height:0.7;
-    }
-
-    .tripDetails p, .tripDetails i {
-        display: inline-block;
-        vertical-align: middle;
-        margin: 10px;
-    }
-
-.rating{
-    background-color: lightgrey;
-    padding: 10px;
-}
-    
-</style>
 

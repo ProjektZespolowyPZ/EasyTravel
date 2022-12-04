@@ -24,6 +24,7 @@ namespace EasyTravel.Application.Tours.Commands.CreateTour
             const string PROCEDURE_NAME1 = "[dbo].[Create_tour]";
             const string PROCEDURE_NAME2 = "[dbo].[Create_tour_dates]";
             const string PROCEDURE_NAME3 = "[dbo].[Create_tour_photos]";
+            const string PROCEDURE_NAME4 = "[dbo].[Create_tags]";
             SqlParameter idTourSQL;
             int idTour;
             
@@ -75,6 +76,19 @@ namespace EasyTravel.Application.Tours.Commands.CreateTour
 
                         sqlCommand.Parameters.Add("@id_tour", SqlDbType.Int).Value = idTour;
                         sqlCommand.Parameters.Add("@photo", SqlDbType.NVarChar).Value = item.TourPhoto;
+
+                        sqlCommand.ExecuteNonQuery();
+
+                    }
+                }
+
+                foreach (var item in request.TourTags)
+                {
+                    using (SqlCommand sqlCommand = new SqlCommand(PROCEDURE_NAME4, sqlConnection) { CommandType = System.Data.CommandType.StoredProcedure })
+                    {
+
+                        sqlCommand.Parameters.Add("@id_tour", SqlDbType.Int).Value = idTour;
+                        sqlCommand.Parameters.Add("@tag", SqlDbType.NVarChar).Value = item.Tag;
 
                         sqlCommand.ExecuteNonQuery();
 

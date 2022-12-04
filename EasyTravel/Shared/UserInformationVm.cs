@@ -16,5 +16,6 @@ namespace EasyTravel.Shared
         public string PhoneNumber { get; set; }
         public DateTime RegistrationDate { get; set; }
         public DateTime LastLoginDate { get; set; }
+        public List<TourDTO> UserTours { get; set; } = new List<TourDTO>();
     }
 }

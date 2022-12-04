@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/searching/{SearchWord}"
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
@@ -33,18 +34,51 @@
 </div>
 
 @code {
+    [Parameter]
+    public string SearchWord
+    {
+        get { return searchWord; }
+        set 
+        { 
+            searchWord = value;
+            GetSearchedTours();
+        } 
+    }
+    private string searchWord;
     public ToursVm tours { get; set; } = new ToursVm();
 
     protected override async Task OnInitializedAsync()
     {
+
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var isAuthenticated = authState.User.Identity.IsAuthenticated;
         if (isAuthenticated)
         {
             tours = await Http.GetFromJsonAsync<ToursVm>("api/tours");
             tours.Tours.Reverse();
+            StateHasChanged();
         }
     }
+
+    private async void GetSearchedTours()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var isAuthenticated = authState.User.Identity.IsAuthenticated;
+        if (isAuthenticated)
+        {
+            if (SearchWord != null)
+            {
+                tours = await Http.GetFromJsonAsync<ToursVm>($"api/tours/searching/{SearchWord}");
+            }
+            else
+            {
+                tours = await Http.GetFromJsonAsync<ToursVm>("api/tours");
+            }
+            tours.Tours.Reverse();
+            StateHasChanged();
+        }
+    }
+
 
     public void GoToDetails(int id)
     {

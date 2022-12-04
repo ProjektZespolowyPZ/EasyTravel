@@ -1,1 +1,52 @@
-﻿
+﻿.page {
+    margin: 50px;
+}
+
+.leftSection {
+    width: 360px;
+    float: left;
+    background-color: lightgrey;
+    max-height: 1000px;
+    padding: 20px;
+    display: inline-block;
+}
+
+    .leftSection h4 {
+        color: dimgrey;
+    }
+
+.userDetails h6, .userDetails i {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+}
+
+.rightSection {
+    margin-left: 370px;
+}
+
+    .rightSection h5 {
+        color: darkgrey;
+    }
+
+.tripInfo h4 {
+    /*color: darkgrey;*/
+    color: dimgrey;
+}
+
+.tripInfo p {
+    color: black;
+    font-size: 18px;
+    line-height: 0.7;
+}
+
+.tripDetails p, .tripDetails i {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+}
+
+.rating {
+    background-color: lightgrey;
+    padding: 10px;
+}

@@ -112,6 +112,24 @@
 
                         }
                     </div>
+                    <div>
+                        <h4>Tagi</h4>
+                        <p>Aby użytkownicy mogli wyszuakć Twoją wycieczkę dodaj tagi, po których Twoja wycieczka będzie szukana.<br /> Może to być np. miasto, w którym odbywa się wycieczka itd. Nie musisz poprzedzać tagu #.</p>
+                        <input id="AddButtonTag" type="button" class="btn btn-primary" value="Dodaj tag do wycieczki" @onclick="AddTag" />
+                        <h6 style="color: red">@ValidateTags</h6>
+                        @if (Tags.Count() != 0)
+                        {
+                            @foreach (var item in Tags)
+                            {
+                                <div class="section2Heading"><h5><label>Tag</label></h5></div>
+                                <div class="form-row">
+                                    <InputText @bind-Value="@item.Tag" class="form-control" />
+                                </div>
+                            }
+
+                        }
+                        
+                    </div>
                     <br /><br />
                     <button type="submit" class="btn btn-primary">Zatwierdź</button>
                     <button type="reset" class="btn btn-danger">Wyczyść</button>
@@ -143,8 +161,10 @@
     public CreateTourForm model = new CreateTourForm();
     public EditContext editContext;
     public List<TourDateDTO> Terms = new List<TourDateDTO>();
+    public List<TourTagDTO> Tags = new List<TourTagDTO>();
     public List<TourPhotoDTO> AdditionalPhotos = new List<TourPhotoDTO>();
     public string ValidateTerms = "";
+    public string ValidateTags = "";
 
     protected override void OnInitialized()
     {
@@ -154,19 +174,26 @@
     private async void HandleValidSubmit()
     {
         Terms = Terms.Where(a => a.TourDate > DateTime.Now && a.Price >= 0.00f && a.Password != null).ToList();
+        Tags = Tags.Where(a => a.Tag != "").ToList();
         model.TourDates = Terms;
         model.TourPhotos = AdditionalPhotos;
-        if (Terms.Count != 0)
+        model.TourTags = Tags;
+        if (Terms.Count != 0 && Tags.Count != 0)
         {
             ValidateTerms = "";
+            ValidateTags = "";
             var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
             var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
             await Http.PostAsync("api/tours/create-tour", content);
             Navigation.NavigateTo("/");
         }
-        else
+        else if(Terms.Count == 0)
         {
-            ValidateTerms = "Proszę podać prawidłowe terminy.";
+            ValidateTerms = "Proszę podać przynajmniej jeden termin.";
+        }
+        else if(Tags.Count == 0)
+        {
+            ValidateTags = "Proszę podać przynajmniej jeden tag.";
         }
     }
 
@@ -245,6 +272,14 @@
             Console.WriteLine(Terms[i].TourDate + "  " + Terms[i].Price);
         }
         Console.WriteLine(Terms.Count);
+        StateHasChanged();
+    }
+
+    private void AddTag()
+    {
+        TourTagDTO t = new TourTagDTO();
+        t.Tag = "";
+        Tags.Add(t);
         StateHasChanged();
     }
 }

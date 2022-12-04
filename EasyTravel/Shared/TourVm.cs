@@ -9,6 +9,7 @@ namespace EasyTravel.Shared
     public class TourVm
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string UserName { get; set; }
         public string Surname { get; set; }
         public string ProfilePicture { get; set; }
@@ -26,5 +27,6 @@ namespace EasyTravel.Shared
         public List<TourDateDTO> TourDates { get; set; } = new List<TourDateDTO>();
         public List<TourPhotoDTO> TourPhotos { get; set; } = new List<TourPhotoDTO>();
         public List<TourOpinionDTO> TourOpinions { get; set; } = new List<TourOpinionDTO>();
+        public List<TourTagDTO> TourTags { get; set; } = new List<TourTagDTO>();
     }
 }

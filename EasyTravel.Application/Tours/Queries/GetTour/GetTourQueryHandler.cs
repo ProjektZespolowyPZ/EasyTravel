@@ -44,6 +44,7 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                             tour.MeetingPlace = sqlDataReader.GetString("Meeting_place");
                             tour.EndPlace = sqlDataReader.GetString("End_place");
                             tour.Length = sqlDataReader.GetString("Lenght");
+                            tour.UserId = sqlDataReader.GetInt32("IdUser");
                         }
 
                         if (sqlDataReader.NextResult())
@@ -92,7 +93,16 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                             }
                         }
 
+                        if (sqlDataReader.NextResult())
+                        {
+                            while (sqlDataReader.Read())
+                            {
+                                TourTagDTO tourTag = new TourTagDTO();
+                                tourTag.Tag = sqlDataReader.GetString("Tag");
 
+                                tour.TourTags.Add(tourTag);
+                            }
+                        }
                     }
 
                 }

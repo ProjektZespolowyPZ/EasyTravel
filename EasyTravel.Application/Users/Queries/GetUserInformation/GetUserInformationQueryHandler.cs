@@ -24,6 +24,7 @@ namespace EasyTravel.Application.Users.Queries.GetUserInformation
         public async Task<UserInformationVm> Handle(GetUserInformationQuery request, CancellationToken cancellationToken)
         {
             const string PROCEDURE_NAME = "[dbo].[Display_user]";
+            const string PROCEDURE_NAME2 = "[dbo].[Display_user_tours]";
             UserInformationVm userInformation = new UserInformationVm();
             using (SqlConnection sqlConnection = new SqlConnection(Resources.ConnectionString))
             {
@@ -47,6 +48,28 @@ namespace EasyTravel.Application.Users.Queries.GetUserInformation
                             userInformation.RegistrationDate = sqlDataReader.GetDateTime("Registration_date");
                             userInformation.LastLoginDate = sqlDataReader.GetDateTime("Last_login_date");
 
+                        }
+                    }
+
+                }
+
+                using (SqlCommand sqlCommand = new SqlCommand(PROCEDURE_NAME2, sqlConnection) { CommandType = System.Data.CommandType.StoredProcedure })
+                {
+                    sqlCommand.Parameters.Add("@id_user", SqlDbType.NVarChar).Value = userInformation.Id;
+                    using (SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())
+                    {
+
+                        while (sqlDataReader.Read())
+                        {
+                            TourDTO tour = new TourDTO();
+                            tour.Id = sqlDataReader.GetInt32("Id");
+                            tour.UserName = sqlDataReader.GetString("UserName");
+                            tour.Surname = sqlDataReader.GetString("Surname");
+                            tour.ProfilePicture = sqlDataReader.GetString("Profile_picture");
+                            tour.MainPhoto = sqlDataReader.GetString("Main_photo");
+                            tour.TourName = sqlDataReader.GetString("TourName");
+
+                            userInformation.UserTours.Add(tour);
                         }
                     }
 
