@@ -21,6 +21,7 @@
                     {
                         <button class="btn btn-danger" @onclick="DeleteTour">Usuń wycieczkę</button>
                     }
+                    <hr />
                     <h4>Dane przewodnika</h4>
                     <br/>
                     @if (tour.ProfilePicture != "")
@@ -36,7 +37,7 @@
                     <hr/>
                     <div class="tripInfo">
                         <h4>Informacje</h4>
-                        <p>Tagi:</p>
+                        <div class="tripDetails"><i class="fas fa-tag fa-2x"></i><p>Tagi: </p></div>
                         @foreach(var item in tour.TourTags)
                         {
                             <div class="tripDetails">#@item.Tag</div>

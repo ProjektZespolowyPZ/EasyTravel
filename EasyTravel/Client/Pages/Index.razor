@@ -6,8 +6,10 @@
 <div>
     <AuthorizeView>
         <Authorized Context="Auth">
+            <br/>
             <h1>Strona główna</h1>
-            <a class="link" href="/tours/CreateTour">Dodaj wycieczkę</a>
+            <hr/>
+            <a class="link" href="/tours/CreateTour"><div class="addTour"><i class="far fa-plus-square fa-2x"></i><h5>Dodaj wycieczkę</h5></div></a>
             <div class="panel-full">
                 @foreach (var item in tours.Tours)
                 {
@@ -126,6 +128,12 @@
         color: white;
         font-family: cursive;
         background: #594ae2ff;
+    }
+   
+    .addTour h5, .addTour i{
+            display: inline-block;
+            vertical-align: middle;
+            margin: 10px;
     }
 
 </style>

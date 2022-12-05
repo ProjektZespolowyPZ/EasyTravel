@@ -112,16 +112,17 @@
 
                         }
                     </div>
+                    <hr />
                     <div>
-                        <h4>Tagi</h4>
+                        <div class="section2Heading"><i class="fas fa-tag fa-3x"></i><h5><label for="createdDate">Tagi</label></h5></div>
                         <p>Aby użytkownicy mogli wyszuakć Twoją wycieczkę dodaj tagi, po których Twoja wycieczka będzie szukana.<br /> Może to być np. miasto, w którym odbywa się wycieczka itd. Nie musisz poprzedzać tagu #.</p>
-                        <input id="AddButtonTag" type="button" class="btn btn-primary" value="Dodaj tag do wycieczki" @onclick="AddTag" />
+                        <input id="AddButtonTag" type="button" class="btn btn-warning" value="Dodaj tag do wycieczki" @onclick="AddTag" />
                         <h6 style="color: red">@ValidateTags</h6>
                         @if (Tags.Count() != 0)
                         {
                             @foreach (var item in Tags)
                             {
-                                <div class="section2Heading"><h5><label>Tag</label></h5></div>
+                                <div class="section2Heading"><i class="fas fa-hashtag fa-3x"></i><h5><label>Tag</label></h5></div>
                                 <div class="form-row">
                                     <InputText @bind-Value="@item.Tag" class="form-control" />
                                 </div>
