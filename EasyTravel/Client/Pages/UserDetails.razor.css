@@ -2,9 +2,9 @@
    
 }
 .bchange {
-    position: absolute;
     color: #0040A1;
-    right: 340px;
+    float: right;
+    padding-right: 1%;
 }
 .bchange:hover{
    color: #FFE4AD;

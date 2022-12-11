@@ -1,0 +1,116 @@
+﻿@page "/users/GetUserTours"
+@using System.Text.Json
+@using System.Text
+@using System.Net.Http.Headers
+
+@inject NavigationManager NavigationManager
+
+@inject HttpClient Http
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized Context="Auth">
+         @if (user == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
+                <div class="panel-full">
+                    @foreach (var item in user.UserTours)
+                    {
+
+                                    <div class="background" @onclick="() => GoToDetails(item.Id)">
+                                        <div class="centered">@item.TourName</div>
+                            @if (item.MainPhoto != "")
+                            {
+
+                                                <img src="@item.MainPhoto" style="width:100%;height:100%; background-position:center; background-size:cover;" />
+
+                            }
+                                    </div>
+                    }
+                        </div>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private TourVm tour;
+    private UserInformationVm user;
+    private string passwordToChosenTerm = "";
+    private bool showPanelToOpinion = false;
+    private bool passwordSend = false;
+    private bool isAnyTourToRate = false;
+    public EnterPassword enterPassword { get; set; } = new EnterPassword();
+    public AddOpinionForm addOpinionForm { get; set; } = new AddOpinionForm();
+    public string ValidateRating = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        tour = await Http.GetFromJsonAsync<TourVm>($"api/tours/{Id}");
+        user = await Http.GetFromJsonAsync<UserInformationVm>($"api/users/GetAllInformation");
+
+        @foreach (var item in tour.TourDates)
+        {
+            @if (item.TourDate < DateTime.Now)
+            {
+                isAnyTourToRate = true;
+                break;
+            }
+        }
+    }
+
+    public void ChosenTourDate(TourDateDTO tourDate)
+    {
+        passwordToChosenTerm = tourDate.Password;
+    }
+
+    public void CheckPassword()
+    {
+        passwordSend = true;
+        if (enterPassword.Password == passwordToChosenTerm) showPanelToOpinion = true;
+        else showPanelToOpinion = false;
+
+    }
+
+    public void AddRating(int rating)
+    {
+        addOpinionForm.Rating = rating;
+    }
+
+    private async void HandleValidSubmit()
+    {
+        if (addOpinionForm.Rating != 0)
+        {
+            ValidateRating = "";
+            addOpinionForm.DateTimeAddingOpinion = DateTime.Now;
+            addOpinionForm.IdTour = tour.Id;
+            var modelJson = JsonSerializer.Serialize(addOpinionForm, new JsonSerializerOptions { WriteIndented = true });
+            var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+            await Http.PostAsync("api/tours/add-opinion", content);
+            NavigationManager.NavigateTo($"/tours/{Id}", forceLoad: true);
+        }
+        else
+        {
+            ValidateRating = "Proszę wybrać ocenę.";
+        }
+    }
+
+    private async void DeleteTour()
+    {
+        await Http.DeleteAsync($"api/tours/{tour.Id}");
+        NavigationManager.NavigateTo("/users/GetUserInformation");
+    }
+    public void GoToDetails(int id)
+    {
+        NavigationManager.NavigateTo($"/tours/{id}");
+    }
+}

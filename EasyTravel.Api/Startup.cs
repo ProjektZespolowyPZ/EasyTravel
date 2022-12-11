@@ -1,7 +1,7 @@
 using EasyTravel.Api.Service;
 using EasyTravel.Application;
 using EasyTravel.Application.Common.Interfaces;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder; 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -92,6 +92,7 @@ namespace EasyTravel.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -111,7 +112,8 @@ namespace EasyTravel.Api
             app.UseCors();
 
             app.UseAuthorization();
-            
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

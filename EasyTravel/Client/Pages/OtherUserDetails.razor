@@ -16,47 +16,36 @@
             }
             else
             {
-                <div class="border">
-                    <div class="left">
-                        <h3>Awatar</h3>
-                        @if (user.ProfilePicture != "")
+                <div class="panel-full">
+                    <div class="top">
+                        <img src="background.png" class="background-img" alt="background">
+                       @if (user.ProfilePicture != "")
                         {
                             <div>
                                 <img class="avatar-img" src="@user.ProfilePicture"/>
-                            </div>
-                              
-
+                            </div>                  
                         }
-                    </div>
-                    <div class="right" style="">
-                        <h3>Dane konta</h3>
-                        <h6>Imię </h6>
-                        <div class="form-row form-control" style="padding:5px;">
-                            <label>@user.Name</label>
-                        </div>
-
-                        <h6>Nazwisko </h6>
-                        <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.Surname</label>
-                        </div>
-
-                        <h6>E-Mail </h6>
-                        <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.Email</label>
-                        </div>
-
-                        <h6>Numer Telefonu </h6>
-                        <div class="form-row form-control" style="padding: 5px;">
-                            <label>@user.PhoneNumber</label>
-                        </div>  
+                        else{
+                            <div>
+                                <img class="avatar-img" src="person.icon.png" />
+                            </div>
+                        }
                         <br>
-                        <h6 class="info">Konto założone dnia: @user.RegistrationDate</h6>
-                        
+                        <br>
+                        <br>
+
+                        <h5>@user.Name @user.Surname</h5>      
+                        <div class="contacts">
+                            <h6>Kontakt:</h6>
+                            <label>@user.Email</label><br>
+                            <label>@user.PhoneNumber</label>
+
+                        </div>
+              
+                        <h5 style="padding: 10px;">Wycieczki</h5>
+                        <br>
                     </div> 
-                </div>
-                <br/><br/>
-                
-                    <div class="panel-full">
+
                         @foreach (var item in user.UserTours)
                         {
 
