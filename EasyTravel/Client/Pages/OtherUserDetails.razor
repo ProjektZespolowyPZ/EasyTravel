@@ -16,9 +16,10 @@
             }
             else
             {
-                <div class="panel-full">
+               
+                <div>
                     <div class="top">
-                        <img src="background.png" class="background-img" alt="background">
+                         <img src="background.png" class="background-img" alt="background">
                        @if (user.ProfilePicture != "")
                         {
                             <div>
@@ -44,21 +45,23 @@
               
                         <h5 style="padding: 10px;">Wycieczki</h5>
                         <br>
-                    </div> 
-
+                    </div>
+                    <div class="panel-full">
                         @foreach (var item in user.UserTours)
                         {
 
-                            <div class="background" @onclick="() => GoToDetails(item.Id)">
-                                <div class="centered">@item.TourName</div>
+                            <div @onclick="() => GoToDetails(item.Id)">
+                                
                                 @if (item.MainPhoto != "")
                                 {
-
-                                    <img src="@item.MainPhoto" style="width:100%;height:100%; background-position:center; background-size:cover;" />
-
+                                    <div class="background">
+                                    <img src="@item.MainPhoto"/>
+                                        <div class="name">@item.TourName</div>
+                                    </div>
                                 }
                             </div>
                         }
+                    </div>
                     </div>
                 
                     

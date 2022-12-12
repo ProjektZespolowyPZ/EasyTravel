@@ -32,7 +32,7 @@ div {
 
 .name {
     padding: 15px;
-    height:90px;
+    height: 90px;
     text-align: center;
     font-family: cursive;
     font-weight: 700;
@@ -44,6 +44,7 @@ div {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
 
 .centered {
     font-weight: 700;

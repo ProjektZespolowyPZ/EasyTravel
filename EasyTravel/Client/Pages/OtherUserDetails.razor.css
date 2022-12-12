@@ -43,20 +43,45 @@ h3 {
     text-align:center;
 }
 .panel-full {
-    padding-top: 2px;
-    display: block flex;
-    flex-wrap: wrap;
+   width:100%;
+   margin:auto;
+   background:#f2f2f2;
+   overflow:auto;
 }
 
 .background {
-    position: relative;
-    text-align: center;
-    color: white;
-    width: 33%;
-    opacity: 0.75;
-    height: 200px;
-    padding: 10px;
+    margin:15px;
+    border:1px solid #ccc;
+    float:left;
+    height:auto;
+    width:30%;
+    overflow:hidden;
 }
+
+    .background img {
+        width: 100%;
+        height: 300px;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+    }
+
+.name {
+    padding: 15px;
+    height: 90px;
+    text-align: center;
+    font-family: cursive;
+    font-weight: 700;
+    font-size: 24px;
+    background-color: antiquewhite;
+}
+
+.background:hover img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
 .background-img {
     left: 0px;
     top: 0px;
@@ -65,9 +90,6 @@ h3 {
     border-radius: 1%;
 }
 
-    .background:hover {
-        opacity: 1;
-    }
 .contacts {
     background-color: lightslategrey;
     position:center;
