@@ -20,6 +20,7 @@
                     @if(user.Id == tour.UserId)
                     {
                         <button class="btn btn-danger" @onclick="DeleteTour">Usuń wycieczkę</button>
+                        <button class="btn btn-primary" @onclick="GoToEditTour">Edytuj wycieczkę</button>
                     }
                     <hr />
                     <h4>Dane przewodnika</h4>
@@ -238,6 +239,11 @@
     {
         await Http.DeleteAsync($"api/tours/{tour.Id}");
         NavigationManager.NavigateTo("/users/GetUserInformation");
+    }
+
+    private void GoToEditTour()
+    {
+        NavigationManager.NavigateTo($"/tours/EditTour/{Id}");
     }
 }
 

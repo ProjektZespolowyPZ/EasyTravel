@@ -1,0 +1,30 @@
+﻿
+
+.section1 {
+    background-color: #EDA71A;
+    float: left;
+    margin: 5px;
+    padding: 10px;
+    max-width: 30vw;
+}
+
+.section2 {
+    background-color: lightgrey;
+    float: left;
+    margin: 5px;
+    padding: 10px;
+}
+
+    .section2 p {
+        color: white;
+    }
+
+.section2Heading i {
+    margin-right: 10px;
+}
+
+.section2Heading h5, .section2Heading i {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+}

@@ -1,4 +1,4 @@
-﻿@page "/tours/CreateTour"
+﻿@page "/tours/EditTour/{Id:int}"
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @using System.Text.Json
@@ -10,6 +10,12 @@
     <AuthorizeView>
         <Authorized Context="Auth">
             <h3>CreateTour</h3>
+            @if(tour == null)
+            {
+                <p>Wczytywanie...</p>
+            }
+            else
+            {
             <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                 <DataAnnotationsValidator />
                 <div class="section1">
@@ -47,6 +53,7 @@
                         @if (model.MainPhoto != "")
                         {
                             <div>
+                                    <button class="btn btn-danger" @onclick="DeleteMainPhoto">Usuń zdjęcie główne</button>
                                 <img src="@model.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
                             </div>
                         }
@@ -56,10 +63,12 @@
                     <hr />
                     <div>
                         <div class="section2Heading"><i class="far fa-map fa-3x"></i><h5>Trasa</h5></div>
-                        <p>Prześlij zdjęcie mapki, z zaznaczaniem trasy według której będzie przebiegać wycieczka</p> 
-                        @if(model.MapPhoto != "")
+                            
+                        <p>Prześlij zdjęcie mapki, z zaznaczaniem trasy według której będzie przebiegać wycieczka</p>
+                        @if (model.MapPhoto != "")
                         {
                             <div>
+                                <button class="btn btn-danger" @onclick="DeleteMap">Usuń trasę</button>
                                 <img src="@model.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
                             </div>
                         }
@@ -70,17 +79,20 @@
                         <div class="section2Heading"><i class="far fa-images fa-3x"></i><h5>Zdjęcia dodatkowe</h5></div>
                         <p>Miejsce na dodatkowe zdjęcia</p>
                         <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
-                        @foreach(var item in AdditionalPhotos)
+                        @foreach (var item in AdditionalPhotos)
                         {
-                            @if(item.TourPhoto != "")
+                            @if (item.TourPhoto != "")
                             {
                                 <div>
+                                    <button class="btn btn-danger" @onclick="() => DeleteAdditionalPhoto(item)">Usuń zdjęcie</button>
                                     <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
-                                </div><br />
+                                </div>
+
+                                <br />
                             }
                         }
                     </div>
-                    <hr /> 
+                    <hr />
                     <div>
                         <input id="AddButton" type="button" class="btn btn-warning" value="Dodaj termin wycieczki" @onclick="AddTerm" />
                         <h6 style="color: red">@ValidateTerms</h6>
@@ -89,6 +101,7 @@
                             @foreach (var item in Terms)
                             {
                                 <br />
+                                    <button class="btn btn-danger" @onclick="() => DeleteTerm(item)">Usuń termin</button>
                                 <div class="form-group">
                                     <div class="section2Heading"><i class="far fa-calendar alt fa-3x"></i><h5><label for="createdDate">Data planowanej wycieczki</label></h5></div>
                                     <InputDateTime id="termTour" class="form-control col-sm-8" @bind-Value="@item.TourDate"></InputDateTime>
@@ -96,12 +109,12 @@
                                 </div>
                                 <div class="section2Heading"><i class="fas fa-money-bill fa-3x"></i><h5><label>Cena</label></h5></div>
                                 <input type="number" step="0.01" @bind-value="@item.Price" />
-                                @if(item.Price < 0)
+                                @if (item.Price < 0)
                                 {
                                     <p style="color: red">Cena nie może być ujemna.</p>
                                 }
                                 <br />
-                                <hr/>
+                                <hr />
                                 <div class="section2Heading"><i class="fas fa-lock fa-3x"></i><h5><label>Hasło</label></h5></div>
                                 <div class="form-row">
                                     <p><label>Wpisz hasło, które przekażesz uczestnikom wycieczki, aby mogli Cię ocenić</label></p>
@@ -122,6 +135,7 @@
                         {
                             @foreach (var item in Tags)
                             {
+                                    <button class="btn btn-danger" @onclick="() => DeleteTag(item)">Usuń tag</button>
                                 <div class="section2Heading"><i class="fas fa-hashtag fa-3x"></i><h5><label>Tag</label></h5></div>
                                 <div class="form-row">
                                     <InputText @bind-Value="@item.Tag" class="form-control" />
@@ -129,7 +143,7 @@
                             }
 
                         }
-                        
+
                     </div>
                     <br /><br />
                     <button type="submit" class="btn btn-primary">Zatwierdź</button>
@@ -147,6 +161,7 @@
 
 
             </EditForm>
+            }
         </Authorized>
         <NotAuthorized>
             <p>Nie można wyświetlić strony niezalogowanym użytkownikom</p>
@@ -154,53 +169,84 @@
     </AuthorizeView>
 </div>
 @code {
+    [Parameter]
+    public int Id { get; set; }
     public string FileUrlMain { get; set; } = "";
     public string FileTypeMain { get; set; }
     public string FileUrlMap { get; set; } = "";
     public string FileTypeMap { get; set; }
     public string FileTypeAdditionalPhoto { get; set; }
-    public CreateTourForm model = new CreateTourForm();
+    public EditTourForm model = new EditTourForm();
+    public TourVm tour;
     public EditContext editContext;
     public List<TourDateDTO> Terms = new List<TourDateDTO>();
     public List<TourTagDTO> Tags = new List<TourTagDTO>();
     public List<TourPhotoDTO> AdditionalPhotos = new List<TourPhotoDTO>();
     public string ValidateTerms = "";
     public string ValidateTags = "";
+    public bool TermsEmpty { get; set; } = false;
 
-    protected override void OnInitialized()
+    protected async override void OnInitialized()
     {
+        tour = await Http.GetFromJsonAsync<TourVm>($"api/tours/{Id}");
+        model.Id = tour.Id;
+        model.Name = tour.TourName;
+        model.Description = tour.Description;
+        model.MeetingPlace = tour.MeetingPlace;
+        model.EndPlace = tour.EndPlace;
+        model.Length = tour.Length;
+        model.MainPhoto = tour.MainPhoto;
+        model.MapPhoto = tour.MapPhoto;
+        foreach (var item in tour.TourPhotos)
+        {
+            AdditionalPhotos.Add(item);
+        }
+        foreach (var item in tour.TourDates)
+        {
+            if(item.TourDate > DateTime.Now)
+            {
+                Terms.Add(item);
+            }
+        }
+        foreach (var item in tour.TourTags)
+        {
+            Tags.Add(item);
+        }
         editContext = new EditContext(model);
+        StateHasChanged();
     }
 
     private async void HandleValidSubmit()
     {
+        if (Terms.Count == 0) TermsEmpty = true;
+        else TermsEmpty = false;
         Terms = Terms.Where(a => a.TourDate > DateTime.Now && a.Price >= 0.00f && a.Password != null).ToList();
         Tags = Tags.Where(a => a.Tag != "").ToList();
         model.TourDates = Terms;
         model.TourPhotos = AdditionalPhotos;
         model.TourTags = Tags;
-        if (Terms.Count != 0 && Tags.Count != 0)
+        if ((TermsEmpty || Terms.Count != 0) && (Tags.Count != 0))
         {
             ValidateTerms = "";
             ValidateTags = "";
             var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
             var content = new StringContent(modelJson, Encoding.UTF8, "application/json");
-            await Http.PostAsync("api/tours/create-tour", content);
-            Navigation.NavigateTo("/");
+            await Http.PutAsync("api/tours/edit-tour", content);
+            Navigation.NavigateTo($"/tours/{Id}");
         }
-        else if(Terms.Count == 0)
-        {
-            ValidateTerms = "Proszę podać przynajmniej jeden termin.";
-        }
-        else if(Tags.Count == 0)
+        else if (Tags.Count == 0)
         {
             ValidateTags = "Proszę podać przynajmniej jeden tag.";
         }
+        else if (Terms.Count == 0)
+        {
+            ValidateTerms = "Proszę podać przynajmniej jeden termin.";
+        } 
     }
 
     private void HandleReset()
     {
-        model = new CreateTourForm();
+        model = new EditTourForm();
         editContext = new EditContext(model);
         FileUrlMain = "";
     }
@@ -268,7 +314,7 @@
         t.TourDate = DateTime.Now;
         t.Price = 0.00f;
         Terms.Add(t);
-        for(int i = 0; i < Terms.Count(); i++)
+        for (int i = 0; i < Terms.Count(); i++)
         {
             Console.WriteLine(Terms[i].TourDate + "  " + Terms[i].Price);
         }
@@ -281,6 +327,37 @@
         TourTagDTO t = new TourTagDTO();
         t.Tag = "";
         Tags.Add(t);
+        StateHasChanged();
+    }
+
+    private void DeleteMainPhoto()
+    {
+        model.MainPhoto = "";
+    }
+
+    private void DeleteMap()
+    {
+        model.MapPhoto = "";
+    }
+
+    private async void DeleteAdditionalPhoto(TourPhotoDTO photo)
+    {
+        AdditionalPhotos.Remove(photo);
+        await Http.DeleteAsync($"api/tours/tour-photos/{photo.Id}");
+        StateHasChanged();
+    }
+
+    private async void DeleteTerm(TourDateDTO term)
+    {
+        Terms.Remove(term);
+        await Http.DeleteAsync($"api/tours/tour-dates/{term.Id}");
+        StateHasChanged();
+    }
+
+    private async void DeleteTag(TourTagDTO tag)
+    {
+        Tags.Remove(tag);
+        await Http.DeleteAsync($"api/tours/tour-tags/{tag.Id}");
         StateHasChanged();
     }
 }

@@ -30,7 +30,7 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                         while (sqlDataReader.Read())
                         {
 
-                            tour.Id = sqlDataReader.GetInt32("Id");
+                            tour.Id = sqlDataReader.GetInt32("IdTour");
                             tour.UserName = sqlDataReader.GetString("UserName");
                             tour.Surname = sqlDataReader.GetString("Surname");
                             tour.ProfilePicture = sqlDataReader.GetString("Profile_picture");
@@ -55,6 +55,7 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                                 tourDate.TourDate = sqlDataReader.GetDateTime("Date_time");
                                 tourDate.Price = sqlDataReader.GetFloat("Price");
                                 tourDate.Password = sqlDataReader.GetString("Password");
+                                tourDate.Id = sqlDataReader.GetInt32("IdTourDate");
 
                                 tour.TourDates.Add(tourDate);
                             }
@@ -66,6 +67,7 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                             {
                                 TourPhotoDTO tourPhoto1 = new TourPhotoDTO();
                                 tourPhoto1.TourPhoto = sqlDataReader.GetString("Photo");
+                                tourPhoto1.Id = sqlDataReader.GetInt32("IdPhoto");
 
                                 tour.TourPhotos.Add(tourPhoto1);
                             }
@@ -98,6 +100,7 @@ namespace EasyTravel.Application.Tours.Queries.GetTour
                             while (sqlDataReader.Read())
                             {
                                 TourTagDTO tourTag = new TourTagDTO();
+                                tourTag.Id = sqlDataReader.GetInt32("IdTag");
                                 tourTag.Tag = sqlDataReader.GetString("Tag");
 
                                 tour.TourTags.Add(tourTag);
