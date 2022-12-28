@@ -294,9 +294,9 @@
 
     ::deep .signOut {
         color: white;
-        margin-left: 10vw;
+        margin-left: 2vw;
         margin-right: 2vw;
-        padding: 2vw;
+        padding: 10px;
     }
 
     ::deep .about {
@@ -306,7 +306,7 @@
 
     ::deep .contacts {
         color: white;
-        padding: 2vw;
+        padding: 10px;
         display: flex;
     }
 
@@ -359,8 +359,8 @@
 
     ::deep .signOut {
         color: white;
-        margin-left: 20vw;
-        margin-right: 2vw;
+        margin-left: 18vw;
+        margin-right: 0vw;
         padding: 2vw;
     }
 
@@ -424,8 +424,8 @@
 
     ::deep .signOut {
         color: white;
-        margin-left: 24vw;
-        margin-right: 2vw;
+        margin-left: 20vw;
+        margin-right: 1vw;
         padding: 2vw;
     }
 
@@ -491,7 +491,8 @@ ol {
 
     ol > li {
         float: right;
-        background-color: #FDD700;
+        /*background-color: #FDD700; jasnozolty*/
+        background-color:#EDA71A;
         width: 140px;
         /*margin-right: 1%;*/
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.28);

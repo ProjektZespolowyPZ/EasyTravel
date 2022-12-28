@@ -9,7 +9,7 @@
 <div class="page" style="padding: 10px;">
     <AuthorizeView>
         <Authorized Context="Auth">
-            <h3>CreateTour</h3>
+            <h3>Create Tour</h3>
             <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit" @onreset="@HandleReset">
                 <DataAnnotationsValidator />
                 <div class="section1">
@@ -126,6 +126,7 @@
                                 <div class="form-row">
                                     <InputText @bind-Value="@item.Tag" class="form-control" />
                                 </div>
+                                <br/>
                             }
 
                         }

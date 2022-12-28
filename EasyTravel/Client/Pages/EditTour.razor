@@ -9,7 +9,7 @@
 <div class="page" style="padding: 10px;">
     <AuthorizeView>
         <Authorized Context="Auth">
-            <h3>CreateTour</h3>
+            <h3>Edit Tour</h3>
             @if(tour == null)
             {
                 <p>Wczytywanie...</p>
@@ -138,11 +138,13 @@
                         {
                             @foreach (var item in Tags)
                             {
-                                    <button class="btn btn-danger" @onclick="() => DeleteTag(item)">Usuń tag</button>
                                 <div class="section2Heading"><i class="fas fa-hashtag fa-3x"></i><h5><label>Tag</label></h5></div>
                                 <div class="form-row">
                                     <InputText @bind-Value="@item.Tag" class="form-control" />
                                 </div>
+                                <br/>
+                                <button class="btn btn-danger" @onclick="() => DeleteTag(item)">Usuń tag</button>
+                                <hr/>
                             }
 
                         }
