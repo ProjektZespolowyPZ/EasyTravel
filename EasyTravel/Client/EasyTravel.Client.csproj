@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <Content Remove="Shared\MyNavMenu.razor" />
+    <Content Remove="wwwroot\background.jpg" />
+    <Content Remove="wwwroot\css\background.png" />
   </ItemGroup>
 
   <ItemGroup>

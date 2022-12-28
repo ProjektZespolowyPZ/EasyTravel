@@ -1,43 +1,458 @@
 ﻿
-.search input[type=text] {
-    width: 30%;
-    padding: 6px;
-    margin-top: 3px;
-    margin-left: 15px;
-    font-size: 17px;
-    border: thick;
-
-}
-.search button {
-    float: right;
-    padding: 10px 10px;
-    margin-top: 3px;
-    margin-right: 16px;
-    background: #ddd;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
-}
-     .search button:hover {
-        background: #ccc;
+@media only screen and (max-width: 500px) {
+    ::deep .bar {
+        width: 40px;
+        padding: 6px;
+        padding-top: 2px;
+        padding-left: 1vw;
+        border: thick;
+    }
+    .search {
+        display: block;
     }
 
-.header{
-    width: auto;
+        .search button {
+            float: right;
+            padding: 7px 7px;
+            margin-top: 0px;
+            background: #ddd;
+            border: thick;
+            cursor: pointer;
+        }
+
+        .search button:hover {
+            background: #ccc;
+        }
+
+    .login {
+        padding: 2%;
+        color: white;
+    }
+
+    .register {
+        margin-left: 5%;
+        color: red;
+    }
+
+    ::deep .signOut {
+        color: white;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+
+    ::deep .about {
+        display: none;
+    }
+
+    ::deep .contacts {
+        display: none;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
+    .menu {
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
 }
-.login {
-    padding: 2px;
-    color: white;
+@media only screen and (min-width: 501px) {
+    ::deep .bar {
+        width: 26vw;
+        padding: 6px;
+        margin-top: 3px;
+        margin-left: 15px;
+        border: thick;
+    }
+    .search {
+        display: block;
+    }
+
+        .search button {
+            float: right;
+            padding: 9.03px 9.03px;
+            margin-top: 3px;
+            margin-right: 16px;
+            background: #ddd;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search button:hover {
+            background: #ccc;
+        }
+
+    .header {
+        width: auto;
+    }
+
+    .login {
+        padding: 2px;
+        color: white;
+    }
+
+    .register {
+        margin-left: 8px;
+        color: red;
+    }
+
+    ::deep .signOut {
+        color: white;
+        margin-left: 1vw;
+        margin-right: 2vw;
+        padding: 3%;
+    }
+
+    ::deep .about {
+        color: white;
+        padding: 1px;
+        display: none;
+    }
+
+    ::deep .contacts {
+        color: white;
+        padding: 1px;
+        display: none;
+    }
+
+    .right {
+        margin-left: 5%;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
 }
-.register{
-    margin-left: 8px;
-    color: red;
+@media only screen and (min-width: 601px) {
+
+    ::deep .bar {
+        width: 200px;
+        padding: 6px;
+        margin-top: 3px;
+        margin-left: 15px;
+        border: thick;
+    }
+
+    .search button {
+        float: right;
+        padding: 9.03px 9.03px;
+        margin-top: 3px;
+        margin-right: 16px;
+        background: #ddd;
+        border: none;
+        cursor: pointer;
+    }
+
+        .search button:hover {
+            background: #ccc;
+        }
+
+
+    .login {
+        padding: 2px;
+        color: white;
+    }
+    .register {
+        margin-left: 8px;
+        color: red;
+    }
+    ::deep .signOut {
+        color: white;
+        margin-left: 5vw;
+        padding: 0%;
+    }
+
+    ::deep .about {
+        color: white;
+        padding: 1px;
+        display: none;
+    }
+
+    ::deep .contacts {
+        color: white;
+        padding: 1px;
+        display: none;
+    }
+
+    .right {
+        margin-left: 5%;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
 }
-.right{
-    margin-left: 5%;
+
+@media only screen and (min-width: 776px) {
+    ::deep .bar {
+        width: 26vw;
+        padding: 6px;
+        margin-top: 3px;
+        margin-left: 15px;
+        border: thick;
+    }
+
+    .search {
+        display: block;
+    }
+
+        .search button {
+            float: right;
+            padding: 9.03px 9.03px;
+            margin-top: 3px;
+            margin-right: 16px;
+            background: #ddd;
+            border: none;
+            cursor: pointer;
+        }
+
+            .search button:hover {
+                background: #ccc;
+            }
+
+    .login {
+        padding: 2px;
+        color: white;
+    }
+
+    .register {
+        margin-left: 8px;
+        color: red;
+    }
+
+    ::deep .signOut {
+        color: white;
+        margin-left: 1vw;
+        margin-right: 2vw;
+        padding: 2vw;
+    }
+
+    ::deep .about {
+        color: white;
+        display: flex;
+    }
+
+    ::deep .contacts {
+        color: white;
+        padding: 2vw;
+        display: flex;
+
+    }
+
+    .right {
+        margin-left: 5%;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
+}
+@media only screen and (min-width: 952px) {
+    ::deep .bar {
+        width: 26vw;
+        padding: 6px;
+        margin-top: 3px;
+        margin-left: 15px;
+        border: thick;
+    }
+
+    .search {
+        display: block;
+    }
+
+        .search button {
+            float: right;
+            padding: 9.03px 9.03px;
+            margin-top: 3px;
+            margin-right: 16px;
+            background: #ddd;
+            border: none;
+            cursor: pointer;
+        }
+
+            .search button:hover {
+                background: #ccc;
+            }
+
+    .login {
+        padding: 2px;
+        color: white;
+    }
+
+    .register {
+        margin-left: 8px;
+        color: red;
+    }
+
+    ::deep .signOut {
+        color: white;
+        margin-left: 10vw;
+        margin-right: 2vw;
+        padding: 2vw;
+    }
+
+    ::deep .about {
+        color: white;
+        display: flex;
+    }
+
+    ::deep .contacts {
+        color: white;
+        padding: 2vw;
+        display: flex;
+    }
+
+    .right {
+        margin-left: 5%;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
+}
+@media only screen and (min-width: 1100px) {
+    ::deep .bar {
+        width: 26vw;
+        padding: 6px;
+        margin-top: 3px;
+        margin-left: 15px;
+        border: thick;
+    }
+
+    .search {
+        display: block;
+    }
+
+        .search button {
+            float: right;
+            padding: 9.03px 9.03px;
+            margin-top: 3px;
+            margin-right: 16px;
+            background: #ddd;
+            border: none;
+            cursor: pointer;
+        }
+
+            .search button:hover {
+                background: #ccc;
+            }
+
+    .login {
+        padding: 2px;
+        color: white;
+    }
+
+    .register {
+        margin-left: 8px;
+        color: red;
+    }
+
+    ::deep .signOut {
+        color: white;
+        margin-left: 20vw;
+        margin-right: 2vw;
+        padding: 2vw;
+    }
+
+    ::deep .about {
+        color: white;
+        display: flex;
+    }
+
+    ::deep .contacts {
+        color: white;
+        padding: 2vw;
+        display: flex;
+    }
+
+    .right {
+        margin-left: 5%;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
+}
+@media only screen and (min-width: 1240px) {
+    ::deep .bar {
+        width: 26vw;
+        padding: 6px;
+        margin-top: 3px;
+        margin-left: 15px;
+        border: thick;
+    }
+
+    .search {
+        display: block;
+    }
+
+        .search button {
+            float: right;
+            padding: 9.03px 9.03px;
+            margin-top: 3px;
+            margin-right: 16px;
+            background: #ddd;
+            border: none;
+            cursor: pointer;
+        }
+
+            .search button:hover {
+                background: #ccc;
+            }
+
+    .login {
+        padding: 2px;
+        color: white;
+    }
+
+    .register {
+        margin-left: 8px;
+        color: red;
+    }
+
+    ::deep .signOut {
+        color: white;
+        margin-left: 24vw;
+        margin-right: 2vw;
+        padding: 2vw;
+    }
+
+    ::deep .about {
+        color: white;
+        display: flex;
+    }
+
+    ::deep .contacts {
+        color: white;
+        padding: 2vw;
+        display: flex;
+    }
+
+    .right {
+        margin-left: 5%;
+    }
+
+    ::deep .logo {
+        color: white;
+        margin-top: 3px;
+        font-size: x-large;
+    }
 }
 
 ol {
+    float: right;
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -47,53 +462,55 @@ ol {
     text-align: center;
     background-color: #FFF;
 }
+
     ol > li > ul > li {
-      background-color:#EEE;
+        background-color: #EEE;
     }
-    ol > li > ul > li:hover {
-      background-color:#808080;
-    }
+
+        ol > li > ul > li:hover {
+            background-color: #808080;
+        }
+
     ol > li > ul {
-      list-style-type:none;
-      padding:0;
-      margin:0;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
     }
+
     ol a {
         display: block;
         color: #000;
         text-decoration: none;
         padding: 0 5px;
     }
+
     ol > li > ul > li:hover a {
-      color:#09C;
-    }
-    ol > li {
-        float: left;
-        background-color: #FDD700;
-        width: 150px;
-    }
-    ol > li > a:hover {
         color: #09C;
     }
 
-    ol > li > ul > li > a {
+    ol > li {
+        float: right;
+        background-color: #FDD700;
+        width: 94px;
+        margin-right: 1%;
+    }
+
+        ol > li > a:hover {
+            color: #09C;
+        }
+
+        ol > li > ul > li > a {
             border-top: 1px solid #FFF;
-    }
+        }
 
-    ol > li > ul {
-        display: none;
-    }
+        ol > li > ul {
+            display: none;
+        }
 
-    ol > li:hover > ul {
-        display: block;
-    }
+        ol > li:hover > ul {
+            display: block;
+        }
 
-    ol > li:hover {
-        background-color: red;
-    }
-
-.logo{
-    margin-top: 3px;
-    font-size:x-large;
-}
-
+        ol > li:hover {
+            background-color: red;
+        }
