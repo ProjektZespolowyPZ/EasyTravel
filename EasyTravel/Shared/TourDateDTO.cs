@@ -10,6 +10,7 @@ namespace EasyTravel.Shared
 {
     public class TourDateDTO
     {
+        public int Id { get; set; }
         [FromNow]
         public DateTime TourDate { get; set; }
         public float Price { get; set; }

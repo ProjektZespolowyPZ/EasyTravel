@@ -1,6 +1,10 @@
 ﻿using EasyTravel.Application.Tours.Commands.AddOpinionToTour;
 using EasyTravel.Application.Tours.Commands.CreateTour;
 using EasyTravel.Application.Tours.Commands.DeleteTour;
+using EasyTravel.Application.Tours.Commands.DeleteTourDate;
+using EasyTravel.Application.Tours.Commands.DeleteTourPhoto;
+using EasyTravel.Application.Tours.Commands.DeleteTourTag;
+using EasyTravel.Application.Tours.Commands.EditTour;
 using EasyTravel.Application.Tours.Queries.GetSearchedTours;
 using EasyTravel.Application.Tours.Queries.GetTour;
 using EasyTravel.Application.Tours.Queries.GetTours;
@@ -27,6 +31,22 @@ namespace EasyTravel.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<ActionResult> CreateTour(CreateTourCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Edits tour. 
+        /// </summary>
+        [Route("edit-tour")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> EditTour(EditTourCommand command)
         {
             var result = await Mediator.Send(command);
             return Ok(result);
@@ -95,6 +115,57 @@ namespace EasyTravel.Api.Controllers
         public async Task<ActionResult> DeleteTour(int id)
         {
             var result = await Mediator.Send(new DeleteTourCommand() { IdTour = id });
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes tour date.
+        /// </summary>
+        /// <param name="id">Date tour id</param>
+        [Route("tour-dates/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteTourDate(int id)
+        {
+            var result = await Mediator.Send(new DeleteTourDateCommand() { Id = id });
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes tour photo.
+        /// </summary>
+        /// <param name="id">Photo tour id</param>
+        [Route("tour-photos/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteTourPhoto(int id)
+        {
+            var result = await Mediator.Send(new DeleteTourPhotoCommand() { Id = id });
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes tour tag.
+        /// </summary>
+        /// <param name="id">Tag tour id</param>
+        [Route("tour-tags/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult> DeleteTourTag(int id)
+        {
+            var result = await Mediator.Send(new DeleteTourTagCommand() { Id = id });
             return Ok(result);
         }
 

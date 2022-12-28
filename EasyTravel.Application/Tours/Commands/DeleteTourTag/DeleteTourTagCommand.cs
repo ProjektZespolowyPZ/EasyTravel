@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyTravel.Shared
+namespace EasyTravel.Application.Tours.Commands.DeleteTourTag
 {
-    public class TourTagDTO
+    public class DeleteTourTagCommand : IRequest
     {
         public int Id { get; set; }
-        public string Tag { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace EasyTravel.Shared
 {
     public class TourPhotoDTO
     {
+        public int Id { get; set; }
         public string TourPhoto { get; set; } = "";
     }
 }
