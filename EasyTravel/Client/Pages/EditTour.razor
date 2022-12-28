@@ -53,8 +53,9 @@
                         @if (model.MainPhoto != "")
                         {
                             <div>
-                                    <button class="btn btn-danger" @onclick="DeleteMainPhoto">Usuń zdjęcie główne</button>
-                                <img src="@model.MainPhoto" style="display: block; max-width: 350px; height: auto;" />
+                                    <div><button class="btn btn-danger" @onclick="DeleteMainPhoto">Usuń zdjęcie główne</button></div>
+                                    <br/>
+                                    <div><img src="@model.MainPhoto" style="display: block; max-width: 350px; height: auto;" /></div>
                             </div>
                         }
                         <InputFile OnChange="@HandleSelectedMainPhotoTour" />
@@ -68,8 +69,9 @@
                         @if (model.MapPhoto != "")
                         {
                             <div>
-                                <button class="btn btn-danger" @onclick="DeleteMap">Usuń trasę</button>
-                                <img src="@model.MapPhoto" style="display: block; max-width: 350px; height: auto;" />
+                                <div><button class="btn btn-danger" @onclick="DeleteMap">Usuń trasę</button></div>
+                                <br/>
+                                <div><img src="@model.MapPhoto" style="display: block; max-width: 350px; height: auto;" /></div>
                             </div>
                         }
                         <InputFile OnChange="@HandleSelectedMapPhoto" />
@@ -78,19 +80,20 @@
                     <div>
                         <div class="section2Heading"><i class="far fa-images fa-3x"></i><h5>Zdjęcia dodatkowe</h5></div>
                         <p>Miejsce na dodatkowe zdjęcia</p>
-                        <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
+                        
                         @foreach (var item in AdditionalPhotos)
                         {
                             @if (item.TourPhoto != "")
                             {
                                 <div>
-                                    <button class="btn btn-danger" @onclick="() => DeleteAdditionalPhoto(item)">Usuń zdjęcie</button>
-                                    <img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" />
+                                    <div><button class="btn btn-danger" @onclick="() => DeleteAdditionalPhoto(item)">Usuń zdjęcie</button></div>
+                                    <br/>
+                                    <div><img src="@item.TourPhoto" style="display: block; max-width: 350px; height: auto;" /></div>
                                 </div>
-
-                                <br />
                             }
+                            <InputFile OnChange="@HandleSelectedAdditionalPhoto" />
                         }
+                        <br/>
                     </div>
                     <hr />
                     <div>

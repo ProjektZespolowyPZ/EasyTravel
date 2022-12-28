@@ -461,14 +461,15 @@ ol {
     line-height: 2em;
     text-align: center;
     background-color: #FFF;
+    border-radius:15px;
 }
 
     ol > li > ul > li {
-        background-color: #EEE;
+        background-color: lightgrey;
     }
 
         ol > li > ul > li:hover {
-            background-color: #808080;
+            background-color: #EDA71A;
         }
 
     ol > li > ul {
@@ -491,8 +492,10 @@ ol {
     ol > li {
         float: right;
         background-color: #FDD700;
-        width: 94px;
-        margin-right: 1%;
+        width: 140px;
+        /*margin-right: 1%;*/
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.28);
+        border-radius: 10px;
     }
 
         ol > li > a:hover {
@@ -511,6 +514,8 @@ ol {
             display: block;
         }
 
+
         ol > li:hover {
-            background-color: red;
+            background-color: #0040A1;
+            border-radius: 0;
         }
