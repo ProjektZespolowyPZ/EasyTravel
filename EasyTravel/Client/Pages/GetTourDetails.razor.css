@@ -1,52 +1,122 @@
-﻿.page {
-    margin: 50px;
-}
+﻿
+@media only screen and (max-width: 550px) {
+    .leftSection {
+        width: 100%;
+        float: left;
+        background-color: lightgrey;
+        padding: 2%;
+        display: block;
+    }
 
-.leftSection {
-    width: 360px;
-    float: left;
-    background-color: lightgrey;
-    max-height: 1200px;
-    padding: 20px;
-    display: inline-block;
-}
+        .leftSection h4 {
+            color: dimgrey;
+        }
+        .leftSection img {
+           position:center;
+            width: 100%;
+            height: auto;
+        }
 
-    .leftSection h4 {
+    .userDetails h6, .userDetails i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+
+    .rightSection {
+    }
+
+        .rightSection h5 {
+            color: darkgrey;
+        }
+        .rightSection img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+    .tripInfo h4 {
+        /*color: darkgrey;*/
         color: dimgrey;
     }
 
-.userDetails h6, .userDetails i {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 10px;
-}
-
-.rightSection {
-    margin-left: 370px;
-}
-
-    .rightSection h5 {
-        color: darkgrey;
+    .tripInfo p {
+        color: black;
+        font-size: 18px;
+        line-height: 0.7;
     }
 
-.tripInfo h4 {
-    /*color: darkgrey;*/
-    color: dimgrey;
+    .tripDetails p, .tripDetails i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+
+    .rating {
+        background-color: lightgrey;
+        padding: 10px;
+    }
 }
 
-.tripInfo p {
-    color: black;
-    font-size: 18px;
-    line-height: 0.7;
-}
+@media only screen and (min-width: 551px) {
+    .leftSection {
+        width: 38%;
+        float: left;
+        background-color: lightgrey;
+        padding: 2%;
+        display: block;
+    }
 
-.tripDetails p, .tripDetails i {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 10px;
-}
+        .leftSection h4 {
+            color: dimgrey;
+        }
 
-.rating {
-    background-color: lightgrey;
-    padding: 10px;
+        .leftSection img {
+            position: center;
+            width: 100%;
+            height: auto;
+        }
+
+    .userDetails h6, .userDetails i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+
+    .rightSection {
+        float: right;
+        width: 58%;
+    }
+
+        .rightSection h5 {
+            color: darkgrey;
+        }
+
+        .rightSection img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+    .tripInfo h4 {
+        /*color: darkgrey;*/
+        color: dimgrey;
+    }
+
+    .tripInfo p {
+        color: black;
+        font-size: 18px;
+        line-height: 0.7;
+    }
+
+    .tripDetails p, .tripDetails i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+
+    .rating {
+        background-color: lightgrey;
+        padding: 10px;
+    }
 }

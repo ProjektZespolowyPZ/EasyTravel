@@ -6,43 +6,10 @@
     float: right;
     padding-right: 1%;
 }
-.bchange:hover{
-   color: #FFE4AD;
-}
 
-.border {
-    font-family: Arial;
-    margin-top: 10px;
-    border-style: solid;
-    border-width: medium;
-    border-radius: 8px;
-    text-align: left;
-    width: 1100px;
-    height: 446px;
-    background-color: lightgrey;
-    float: left;
-}
-.left {
-    margin-top: 0px;
-    text-align: center;
-    border-radius: 8px;
-    width: 45%;
-    float: left;
-    margin-top: 20px;
-    padding: 10px;
-    height: auto;
-}
-.right {
-    position: center;
-    margin-top: 20px;
-    margin-right: 18px;
-    border-radius: 8px;
-    width: 50%;
-    height: auto;
-    float: right;
-    padding: 15px;
-    background-color: #EDA71A;
-}
+    .bchange:hover {
+        color: #FFE4AD;
+    }
 
 .avatar-img {
     border: 0px solid black;
@@ -54,22 +21,27 @@
     vertical-align: middle;
     margin: 0 auto
 }
-.info{
+
+.info {
     float: right;
 }
-h6{
+
+h6 {
     margin-top: 7px;
     color: white;
     font-weight: 100;
 }
+
 h3 {
     color: white;
     font-weight: 100;
 }
+
 .left h3 {
     color: dimgrey;
     font-weight:;
 }
+
 .left h6 {
     color: dimgrey;
     font-weight: 600;
@@ -83,7 +55,6 @@ h3 {
 
 .chooseFile {
     position: center;
-
 }
 
 .panel-full {
@@ -119,4 +90,81 @@ h3 {
     color: white;
     font-family: cursive;
     background: #594ae2ff;
+}
+@media only screen and (max-width: 740px) {
+
+    .border {
+        font-family: Arial;
+        margin-top: 10px;
+        border-style: solid;
+        border-width: medium;
+        border-radius: 8px;
+        text-align: left;
+        width: 95%;
+        height: 446px;
+        background-color: lightgrey;
+        float: left;
+    }
+
+    .left {
+        margin-top: 0px;
+        text-align: center;
+        border-radius: 8px;
+        width: 100%;
+        float: left;
+        margin-top: 20px;
+        padding: 10px;
+        height: auto;
+    }
+
+    .right {
+        position: center;
+        margin-top: 14px;
+        margin-right: 18px;
+        border-radius: 8px;
+        width: 100%;
+        height: auto;
+        float: left;
+        padding: 15px;
+        background-color: #EDA71A;
+    }
+}
+
+@media only screen and (min-width: 741px) {
+
+    .border {
+        font-family: Arial;
+        margin-top: 10px;
+        border-style: solid;
+        border-width: medium;
+        border-radius: 8px;
+        text-align: left;
+        width: 98%;
+        height: 446px;
+        background-color: lightgrey;
+        float: left;
+    }
+
+    .left {
+        margin-top: 0px;
+        text-align: center;
+        border-radius: 8px;
+        width: 45%;
+        float: left;
+        margin-top: 20px;
+        padding: 10px;
+        height: auto;
+    }
+
+    .right {
+        position: center;
+        margin-top: 20px;
+        margin-right: 18px;
+        border-radius: 8px;
+        width: 50%;
+        height: auto;
+        float: right;
+        padding: 15px;
+        background-color: #EDA71A;
+    }
 }

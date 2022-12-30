@@ -60,7 +60,7 @@
 }
 @media only screen and (min-width: 501px) {
     ::deep .bar {
-        width: 26vw;
+        width: 20vw;
         padding: 6px;
         margin-top: 3px;
         margin-left: 15px;
@@ -130,7 +130,7 @@
 @media only screen and (min-width: 601px) {
 
     ::deep .bar {
-        width: 200px;
+        width: 22vw;
         padding: 6px;
         margin-top: 3px;
         margin-left: 15px;
@@ -191,7 +191,7 @@
 
 @media only screen and (min-width: 776px) {
     ::deep .bar {
-        width: 26vw;
+        width: 21.5vw;
         padding: 6px;
         margin-top: 3px;
         margin-left: 15px;
