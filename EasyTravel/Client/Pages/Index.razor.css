@@ -26,6 +26,10 @@ div {
     .background img {
         width: 100%;
         height: 194px;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
     }
 
 .name {
@@ -33,7 +37,7 @@ div {
     height: 76px;
     text-align: center;
     font-family: cursive;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 24px;
     background-color: antiquewhite;
 }
@@ -41,6 +45,8 @@ div {
 .background:hover img {
     cursor: pointer;
     opacity: 0.67;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .centered {
