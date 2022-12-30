@@ -1,31 +1,52 @@
 
+@media only screen and (max-width: 540px) {
+    .section1 {
+        background-color: #EDA71A;
+        float: left;
+        margin: 5px;
+        padding: 10px;
+        width: 100%;
+    }
 
-.section1 {
-    background-color: #EDA71A;
-    float: left;
-    margin: 5px;
-    padding: 10px;
-    max-width: 30vw;
+    .section2 {
+        background-color: lightgrey;
+        float: left;
+        margin: 5px;
+        padding: 10px;
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 541px) {
+    .section1 {
+        background-color: #EDA71A;
+        float: left;
+        margin: 5px;
+        padding: 10px;
+        width: 34%;
+    }
+
+    .section2 {
+        background-color: lightgrey;
+        float: left;
+        margin: 5px;
+        padding: 10px;
+        width: 60%;
+    }
 }
 
-.section2 {
-    background-color: lightgrey;
-    float: left;
-    margin: 5px;
-    padding: 10px;
-}
+        .section2 p {
+            color: black;
+        }
 
-.section2 p {
-    color: black;
-}
+    .section2Heading i {
+        margin-right: 10px;
+    }
 
-.section2Heading i {
-    margin-right: 10px;
+    .section2Heading h5, .section2Heading i {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px;
+    }
+.section2 img {
+    width: 100%;
 }
-
-.section2Heading h5, .section2Heading i {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 10px;
-}
-
