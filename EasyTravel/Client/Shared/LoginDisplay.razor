@@ -33,10 +33,7 @@
     </Authorized>
     
     <NotAuthorized>
-
-        <MudDivider Class="logo"></MudDivider><MudButton Variant="Variant.Text" @onclick="GoToMainPage" Style="color: white; font-size:28px;">Logo</MudButton>
-        <MudButton Variant="Variant.Text"  Style="color: white;  margin-left: 20vw;padding: 1%">O nas</MudButton>
-        <MudButton Variant="Variant.Text"  Style="color: white; padding: 1%">Kontakt</MudButton>
+        <div><MudButton Variant="Variant.Text" @onclick="GoToMainPage" Class="logo">Logo</MudButton></div>
         <a href="authentication/login" class="login">Zaloguj</a>
     </NotAuthorized>
 </AuthorizeView>

@@ -23,11 +23,11 @@
         .search button:hover {
             background: #ccc;
         }
-
     .login {
-        padding: 2%;
+       padding-left: 50%;
         color: white;
     }
+  
 
     .register {
         margin-left: 5%;
@@ -87,9 +87,8 @@
     .header {
         width: auto;
     }
-
     .login {
-        padding: 2px;
+        padding-left: 70%;
         color: white;
     }
 
@@ -146,16 +145,17 @@
         border: none;
         cursor: pointer;
     }
+    .login {
+        padding-left: 76%;
+        color: white;
+    }
 
         .search button:hover {
             background: #ccc;
         }
 
 
-    .login {
-        padding: 2px;
-        color: white;
-    }
+ 
     .register {
         margin-left: 8px;
         color: red;
@@ -217,10 +217,9 @@
             }
 
     .login {
-        padding: 2px;
+        padding-left: 80%;
         color: white;
     }
-
     .register {
         margin-left: 8px;
         color: red;
@@ -263,7 +262,10 @@
         margin-left: 15px;
         border: thick;
     }
-
+    .login {
+        padding-left: 82%;
+        color: white;
+    }
     .search {
         display: block;
     }
@@ -282,10 +284,7 @@
                 background: #ccc;
             }
 
-    .login {
-        padding: 2px;
-        color: white;
-    }
+ 
 
     .register {
         margin-left: 8px;
@@ -328,7 +327,10 @@
         margin-left: 15px;
         border: thick;
     }
-
+    .login {
+        padding-left: 85%;
+        color: white;
+    }
     .search {
         display: block;
     }
@@ -346,11 +348,6 @@
             .search button:hover {
                 background: #ccc;
             }
-
-    .login {
-        padding: 2px;
-        color: white;
-    }
 
     .register {
         margin-left: 8px;
@@ -393,7 +390,10 @@
         margin-left: 15px;
         border: thick;
     }
-
+    .login {
+        padding-left: 87%;
+        color: white;
+    }
     .search {
         display: block;
     }
@@ -412,10 +412,6 @@
                 background: #ccc;
             }
 
-    .login {
-        padding: 2px;
-        color: white;
-    }
 
     .register {
         margin-left: 8px;
@@ -450,7 +446,6 @@
         font-size: x-large;
     }
 }
-
 ol {
     float: right;
     list-style-type: none;
