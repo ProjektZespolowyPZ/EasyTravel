@@ -6,21 +6,24 @@ div {
 }
 
 .panel-full {
-    width: 100%;
-    background: #F5C13C;
-    display: flex;
+    max-width: 1200px;
+    overflow: auto;
+    /*margin: auto;*/
+    /*display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    */
 }
 
 .background {
-    margin: 15px;
+    margin: auto;
     float: left;
-    height: 270px;
-    width: 300px;
+    width: 390px;
+    overflow: hidden;
+    /*height: 270px;
     overflow: hidden;
     padding: 8px;
-    overflow: hidden;
+    overflow: hidden;*/
 }
 
     .background img {
@@ -40,6 +43,7 @@ div {
     font-weight: 600;
     font-size: 24px;
     background-color: antiquewhite;
+    border: 1px solid #ccc;
 }
 
 .background:hover img {
